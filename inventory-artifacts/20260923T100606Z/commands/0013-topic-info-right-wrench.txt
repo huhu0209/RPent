@@ -1,0 +1,20 @@
+Type: geometry_msgs/msg/WrenchStamped
+
+Publisher count: 1
+
+Node name: force_sense_driver
+Node namespace: /right
+Topic type: geometry_msgs/msg/WrenchStamped
+Endpoint type: PUBLISHER
+GID: 01.10.b3.87.81.0a.c5.7e.30.9a.8d.1f.00.00.15.03.00.00.00.00.00.00.00.00
+QoS profile:
+  Reliability: RELIABLE
+  History (Depth): UNKNOWN
+  Durability: VOLATILE
+  Lifespan: Infinite
+  Deadline: Infinite
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: Infinite
+
+Subscription count: 0
+

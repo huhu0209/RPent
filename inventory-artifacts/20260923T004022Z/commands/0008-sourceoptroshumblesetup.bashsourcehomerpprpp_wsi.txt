@@ -1,0 +1,6 @@
+Published topics:
+ * /parameter_events [rcl_interfaces/msg/ParameterEvent] 1 publisher
+ * /rosout [rcl_interfaces/msg/Log] 1 publisher
+
+Subscribed topics:
+

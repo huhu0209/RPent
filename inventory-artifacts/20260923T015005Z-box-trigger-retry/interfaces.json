@@ -1,0 +1,50 @@
+{
+  "inventory_status": "completed_box_trigger_retry_with_successful_pose",
+  "ssh_session_established": true,
+  "selected_environment": {
+    "ROS_DOMAIN_ID": "3",
+    "ROS_LOCALHOST_ONLY": "0"
+  },
+  "subsystems": {
+    "box_perception_trigger": {
+      "service": "/industrial_box/trigger",
+      "type": "std_srvs/srv/Trigger",
+      "requested_once": true,
+      "client_exit_status": 124,
+      "client_response_received": false
+    },
+    "box_perception_pose": {
+      "topic": "/industrial_box/pose_base",
+      "type": "geometry_msgs/msg/PoseStamped",
+      "sample_read": true,
+      "exit_status": 0,
+      "header": {
+        "stamp": "2026-09-23T01:50:40.978168037Z",
+        "frame_id": "base_link"
+      },
+      "position_xyz_m": [
+        0.8873708746631405,
+        -0.035999283681093355,
+        0.42800562311025236
+      ],
+      "orientation_xyzw": [
+        -0.4957546935576571,
+        -0.47986237790359615,
+        0.5034351180714871,
+        0.520108127201073
+      ]
+    },
+    "box_perception_status": {
+      "topic": "/industrial_box/status",
+      "type": "std_msgs/msg/String",
+      "sample_read": true,
+      "exit_status": 0,
+      "data": "{\"success\": true, \"request_source\": \"trigger_service_sdk\", \"frame_id\": \"head_camera_color_optical_frame\", \"ros_source_stamp\": {...\"}"
+    }
+  },
+  "evidence": [
+    "commands/0002-topic-echo-once-industrial-box-pose-base.txt",
+    "commands/0003-topic-echo-once-industrial-box-status.txt",
+    "commands/0004-service-call-industrial-box-trigger.txt"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "inventory_status": "stopped_connection_failed",
+  "ssh_session_established": false,
+  "workspace_review_completed": false,
+  "ros_graph_observed": false,
+  "subsystems": {
+    "chassis": {
+      "observed": false,
+      "present": null,
+      "reason": "connection_failed_before_graph_observation"
+    },
+    "localization": {
+      "observed": false,
+      "present": null,
+      "reason": "connection_failed_before_graph_observation"
+    },
+    "waist": {
+      "observed": false,
+      "present": null,
+      "reason": "connection_failed_before_graph_observation"
+    },
+    "left_arm": {
+      "observed": false,
+      "present": null,
+      "reason": "connection_failed_before_graph_observation"
+    },
+    "right_arm": {
+      "observed": false,
+      "present": null,
+      "reason": "connection_failed_before_graph_observation"
+    },
+    "dual_arm_controller": {
+      "observed": false,
+      "present": null,
+      "reason": "connection_failed_before_graph_observation"
+    },
+    "left_gripper": {
+      "observed": false,
+      "present": null,
+      "reason": "connection_failed_before_graph_observation"
+    },
+    "right_gripper": {
+      "observed": false,
+      "present": null,
+      "reason": "connection_failed_before_graph_observation"
+    },
+    "box_perception_pose": {
+      "observed": false,
+      "present": null,
+      "reason": "connection_failed_before_graph_observation"
+    },
+    "box_perception_status": {
+      "observed": false,
+      "present": null,
+      "reason": "connection_failed_before_graph_observation"
+    }
+  },
+  "evidence": [
+    "commands/0001-date-Is.txt",
+    "commands/0002-readlink-fhomerpprpp_ws.txt",
+    "commands/0003-stat-cUGanoptroshumblesetup.bashhomerpprpp_wsins.txt"
+  ]
+}

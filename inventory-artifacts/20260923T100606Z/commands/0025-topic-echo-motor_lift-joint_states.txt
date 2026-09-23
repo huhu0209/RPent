@@ -1,0 +1,12 @@
+header:
+  stamp:
+    sec: 1790158329
+    nanosec: 775869035
+  frame_id: ''
+name:
+- connector_joint
+position:
+- -0.029999999329447746
+velocity: []
+effort: []
+---

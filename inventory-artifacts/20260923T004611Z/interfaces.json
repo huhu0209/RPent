@@ -1,0 +1,138 @@
+{
+  "inventory_status": "stopped_dual_arm_controller_and_safety_evidence_absent",
+  "ssh_session_established": true,
+  "workspace_review_completed": true,
+  "ros_graph_observed": true,
+  "selected_environment": {
+    "ROS_DOMAIN_ID": "3",
+    "ROS_LOCALHOST_ONLY": "0"
+  },
+  "graph_summary": {
+    "node_list_status": 0,
+    "node_count": 10,
+    "topic_list_status": 0,
+    "service_list_verbose_status": 2,
+    "service_list_verbose_error": "unrecognized arguments: -v",
+    "action_list_verbose_status": 2,
+    "action_list_verbose_error": "unrecognized arguments: -v"
+  },
+  "subsystems": {
+    "chassis": {
+      "graph_candidates": [
+        {
+          "topic": "/twist",
+          "type": "geometry_msgs/msg/Twist"
+        }
+      ],
+      "graph_present": true,
+      "validated": false,
+      "validation_status": "not_run_stopped_before_subsystem_observation"
+    },
+    "localization": {
+      "graph_candidates": [
+        {
+          "topic": "/odom",
+          "type": "nav_msgs/msg/Odometry"
+        }
+      ],
+      "graph_present": true,
+      "validated": false,
+      "validation_status": "not_run_stopped_before_subsystem_observation"
+    },
+    "waist": {
+      "graph_candidates": [
+        {
+          "topic": "/motor_lift/joint_states",
+          "type": "sensor_msgs/msg/JointState"
+        },
+        {
+          "topic": "/motor_lift/position",
+          "type": "std_msgs/msg/Float32"
+        }
+      ],
+      "graph_present": true,
+      "validated": false,
+      "validation_status": "not_run_stopped_before_subsystem_observation"
+    },
+    "left_arm": {
+      "graph_candidates": [
+        {
+          "topic": "/left_xarm/joint_states",
+          "type": "sensor_msgs/msg/JointState"
+        },
+        {
+          "topic": "/left_xarm/robot_states",
+          "type": "xarm_msgs/msg/RobotMsg"
+        }
+      ],
+      "graph_present": true,
+      "validated": false,
+      "validation_status": "not_run_stopped_before_subsystem_observation"
+    },
+    "right_arm": {
+      "graph_candidates": [
+        {
+          "topic": "/right_xarm/joint_states",
+          "type": "sensor_msgs/msg/JointState"
+        },
+        {
+          "topic": "/right_xarm/robot_states",
+          "type": "xarm_msgs/msg/RobotMsg"
+        }
+      ],
+      "graph_present": true,
+      "validated": false,
+      "validation_status": "not_run_stopped_before_subsystem_observation"
+    },
+    "dual_arm_controller": {
+      "graph_candidates": [],
+      "graph_present": false,
+      "reviewed_controller_evidence_present": false,
+      "safety_evidence_present": false,
+      "validated": false,
+      "validation_status": "stopped_controller_and_safety_evidence_absent"
+    },
+    "left_gripper": {
+      "graph_candidates": [
+        {
+          "topic": "/left/joint_states",
+          "type": "sensor_msgs/msg/JointState"
+        }
+      ],
+      "graph_present": true,
+      "validated": false,
+      "validation_status": "not_run_stopped_before_subsystem_observation"
+    },
+    "right_gripper": {
+      "graph_candidates": [
+        {
+          "topic": "/right/joint_states",
+          "type": "sensor_msgs/msg/JointState"
+        }
+      ],
+      "graph_present": true,
+      "validated": false,
+      "validation_status": "not_run_stopped_before_subsystem_observation"
+    },
+    "box_perception_pose": {
+      "graph_candidates": [],
+      "graph_present": false,
+      "validated": false,
+      "validation_status": "not_run_stopped_before_subsystem_observation"
+    },
+    "box_perception_status": {
+      "graph_candidates": [],
+      "graph_present": false,
+      "validated": false,
+      "validation_status": "not_run_stopped_before_subsystem_observation"
+    }
+  },
+  "evidence": [
+    "commands/0003-stat-cUGanoptroshumblesetup.bashhomerpprpp_wsins.txt",
+    "commands/0006-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt",
+    "commands/0007-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt",
+    "commands/0008-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt",
+    "commands/0009-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt",
+    "commands/0010-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt"
+  ]
+}

@@ -1,0 +1,4 @@
+Action: /left_xarm_gripper/gripper_action
+Action clients: 0
+Action servers: 1
+    /left_ufactory_driver

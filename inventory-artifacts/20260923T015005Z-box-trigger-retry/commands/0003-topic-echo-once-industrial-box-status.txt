@@ -1,0 +1,2 @@
+data: '{"success": true, "request_source": "trigger_service_sdk", "frame_id": "head_camera_color_optical_frame", "ros_source_stamp": {"...'
+---

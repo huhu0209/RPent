@@ -1,0 +1,12 @@
+header:
+  stamp:
+    sec: 1790158326
+    nanosec: 703397856
+  frame_id: left_R2
+name:
+- left_R2
+position:
+- 0.699999988079071
+velocity: []
+effort: []
+---

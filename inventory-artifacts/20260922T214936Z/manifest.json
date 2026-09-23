@@ -1,0 +1,53 @@
+{
+  "manifest_version": 1,
+  "created_at_utc": "2026-09-22T21:49:36Z",
+  "robot": "robot1",
+  "runbook_sha256": "10a1788be500026e58500c380cdaa4faa112f57295137d365effc21e741e5c91",
+  "authorization_reference": "user-chat-approval-2026-09-23T05:49+08:00",
+  "operator_notes": "Read-only inventory authorized in chat. SSH timed out or returned No route to host; no session was established, no setup file was sourced, and no ROS observation was attempted.",
+  "artifacts": [
+    {
+      "path": "command-index.tsv",
+      "sha256": "49e6a27a54483a2097c1645b99dc228567839908314f9c60653382c46c6a60b8",
+      "bytes": 504,
+      "command": "workstation command index",
+      "captured_at_utc": "2026-09-22T21:50:06Z"
+    },
+    {
+      "path": "commands/0001-date-Is.txt",
+      "sha256": "f75e7ec25777eb625fb98cc92a3a6181512e6b72a88581cc7e2ab53153242469",
+      "bytes": 67,
+      "command": "date -Is",
+      "captured_at_utc": "2026-09-22T21:49:53Z"
+    },
+    {
+      "path": "commands/0002-readlink-fhomerpprpp_ws.txt",
+      "sha256": "4ea4179ca08a8ad695149613dbbd45c3daf3599b3657c42bde1ec37384051fc6",
+      "bytes": 63,
+      "command": "readlink -f /home/rpp/rpp_ws",
+      "captured_at_utc": "2026-09-22T21:50:03Z"
+    },
+    {
+      "path": "commands/0003-stat-cUGanoptroshumblesetup.bashhomerpprpp_wsins.txt",
+      "sha256": "4ea4179ca08a8ad695149613dbbd45c3daf3599b3657c42bde1ec37384051fc6",
+      "bytes": 63,
+      "command": "stat -c '%U:%G %a %n' /opt/ros/humble/setup.bash /home/rpp/rpp_ws/install/setup.bash",
+      "captured_at_utc": "2026-09-22T21:50:06Z"
+    },
+    {
+      "path": "interfaces.json",
+      "sha256": "eaff346dcc9dc4ce62db299c0856f626e3e251af5556dd3cd0f972901768986e",
+      "bytes": 1743,
+      "command": "workstation interface result record",
+      "captured_at_utc": "2026-09-22T21:50:51Z"
+    },
+    {
+      "path": "run-notes.md",
+      "sha256": "0ff2f8249fe4d45fb1ba72fe70601de1a04e1f35bb7b20b744c28faf28c15324",
+      "bytes": 945,
+      "command": "workstation run notes",
+      "captured_at_utc": "2026-09-22T21:50:51Z"
+    }
+  ],
+  "sha256_algorithm": "sha256"
+}

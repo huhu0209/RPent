@@ -1,0 +1,2 @@
+root:root 644 /opt/ros/humble/setup.bash
+rpp:rpp 664 /home/rpp/rpp_ws/install/setup.bash

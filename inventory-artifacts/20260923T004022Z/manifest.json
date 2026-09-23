@@ -1,0 +1,102 @@
+{
+  "manifest_version": 1,
+  "created_at_utc": "2026-09-23T00:40:22Z",
+  "robot": "robot1",
+  "runbook_sha256": "10a1788be500026e58500c380cdaa4faa112f57295137d365effc21e741e5c91",
+  "authorization_reference": "user-chat-retry-authorization-2026-09-23T08:40+08:00",
+  "operator_notes": "Read-only inventory retry authorized in chat. SSH and workspace review succeeded; ROS graph exposed no robot subsystem nodes or topics. Inventory stopped because reviewed dual-arm controller and safety evidence were absent.",
+  "artifacts": [
+    {
+      "path": "command-index.tsv",
+      "sha256": "41ab3b2d15fa0039834e4141964dfad8fc1024abf3e5182bc0db90478c9dc8c1",
+      "bytes": 2007,
+      "command": "workstation command index",
+      "captured_at_utc": "2026-09-23T00:41:18Z"
+    },
+    {
+      "path": "commands/0001-date-Is.txt",
+      "sha256": "095919c29fbca3eb1d91895bb010bc6c8a21252e50ea450567ca2725d9f26cd8",
+      "bytes": 26,
+      "command": "date -Is",
+      "captured_at_utc": "2026-09-23T00:40:36Z"
+    },
+    {
+      "path": "commands/0002-readlink-fhomerpprpp_ws.txt",
+      "sha256": "4075e551f154f61a69a7e8cca4a6c78248c5891433276988274990f7d22482b6",
+      "bytes": 17,
+      "command": "readlink -f /home/rpp/rpp_ws",
+      "captured_at_utc": "2026-09-23T00:40:36Z"
+    },
+    {
+      "path": "commands/0003-stat-cUGanoptroshumblesetup.bashhomerpprpp_wsins.txt",
+      "sha256": "e42a466481756962d8ef3263172aa267912f525de50c7a171a1e20fc6922211b",
+      "bytes": 89,
+      "command": "stat -c '%U:%G %a %n' /opt/ros/humble/setup.bash /home/rpp/rpp_ws/install/setup.bash",
+      "captured_at_utc": "2026-09-23T00:40:36Z"
+    },
+    {
+      "path": "commands/0004-sourceoptroshumblesetup.bash.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "command": "source /opt/ros/humble/setup.bash",
+      "captured_at_utc": "2026-09-23T00:41:13Z"
+    },
+    {
+      "path": "commands/0005-sourcehomerpprpp_wsinstallsetup.bash.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "command": "source /home/rpp/rpp_ws/install/setup.bash",
+      "captured_at_utc": "2026-09-23T00:41:14Z"
+    },
+    {
+      "path": "commands/0006-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; printenv ROS_DOMAIN_ID ROS_LOCALHOST_ONLY",
+      "captured_at_utc": "2026-09-23T00:41:14Z"
+    },
+    {
+      "path": "commands/0007-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; timeout 10s ros2 node list",
+      "captured_at_utc": "2026-09-23T00:41:15Z"
+    },
+    {
+      "path": "commands/0008-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt",
+      "sha256": "ec7dcc67343b05c04f752bd8584b23c09ad11cd097867637623362a93339e23d",
+      "bytes": 156,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; timeout 10s ros2 topic list -v",
+      "captured_at_utc": "2026-09-23T00:41:17Z"
+    },
+    {
+      "path": "commands/0009-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt",
+      "sha256": "5d84eb3fc229f2a3584eaa765b0d420bca620524f0adbbdc686547b01b9c963e",
+      "bytes": 156,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; timeout 10s ros2 service list -v",
+      "captured_at_utc": "2026-09-23T00:41:17Z"
+    },
+    {
+      "path": "commands/0010-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt",
+      "sha256": "5d84eb3fc229f2a3584eaa765b0d420bca620524f0adbbdc686547b01b9c963e",
+      "bytes": 156,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; timeout 10s ros2 action list -v",
+      "captured_at_utc": "2026-09-23T00:41:18Z"
+    },
+    {
+      "path": "interfaces.json",
+      "sha256": "de0b5d7cc00b81d944e21644f9490cf6b122594d11611ba753ce152ad7774e54",
+      "bytes": 2775,
+      "command": "workstation interface result record",
+      "captured_at_utc": "2026-09-23T00:42:41Z"
+    },
+    {
+      "path": "run-notes.md",
+      "sha256": "eab6d978d43a963df13cdb48dace8540d198346715d2ad6a9f8b316280fec068",
+      "bytes": 2018,
+      "command": "workstation run notes",
+      "captured_at_utc": "2026-09-23T00:42:41Z"
+    }
+  ],
+  "sha256_algorithm": "sha256"
+}

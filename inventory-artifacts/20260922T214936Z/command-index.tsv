@@ -1,0 +1,4 @@
+sequence	command	artifact	exit_status	captured_at_utc
+1	date -Is	inventory-artifacts/20260922T214936Z/commands/0001-date-Is.txt	255	2026-09-22T21:49:53Z
+2	readlink -f /home/rpp/rpp_ws	inventory-artifacts/20260922T214936Z/commands/0002-readlink-fhomerpprpp_ws.txt	255	2026-09-22T21:50:03Z
+3	stat -c '%U:%G %a %n' /opt/ros/humble/setup.bash /home/rpp/rpp_ws/install/setup.bash	inventory-artifacts/20260922T214936Z/commands/0003-stat-cUGanoptroshumblesetup.bashhomerpprpp_wsins.txt	255	2026-09-22T21:50:06Z

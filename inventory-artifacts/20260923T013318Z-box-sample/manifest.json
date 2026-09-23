@@ -1,0 +1,67 @@
+{
+  "manifest_version": 1,
+  "created_at_utc": "2026-09-23T01:33:18Z",
+  "robot": "robot1",
+  "runbook_sha256": "5c1fedb7868362c0615fac354be12c20d1f39fd7b481c5850f204516e0e06c4c",
+  "authorization_reference": "user-chat-box-topic-one-shot-read-2026-09-23T09:33+08:00",
+  "operator_notes": "User authorized the proposed one-shot read-only sample of both box perception topics. Both reads timed out with status 124 and zero bytes; no perception trigger or control command was executed.",
+  "artifacts": [
+    {
+      "path": "command-index.tsv",
+      "sha256": "f76b3c2012fa83e54094ae90fc65f8bbd18884434cd05343d75e93c3ff260599",
+      "bytes": 1105,
+      "command": "workstation command index",
+      "captured_at_utc": "2026-09-23T01:34:07Z"
+    },
+    {
+      "path": "commands/0001-date-Is.txt",
+      "sha256": "f1820371474e5f2f55cbde607dc6c9b31b2bde447ae7cf0f9b361d0f18d3347a",
+      "bytes": 26,
+      "command": "date -Is",
+      "captured_at_utc": "2026-09-23T01:33:31Z"
+    },
+    {
+      "path": "commands/0002-readlink-fhomerpprpp_ws.txt",
+      "sha256": "4075e551f154f61a69a7e8cca4a6c78248c5891433276988274990f7d22482b6",
+      "bytes": 17,
+      "command": "readlink -f /home/rpp/rpp_ws",
+      "captured_at_utc": "2026-09-23T01:33:31Z"
+    },
+    {
+      "path": "commands/0003-stat-cUGanoptroshumblesetup.bashhomerpprpp_wsins.txt",
+      "sha256": "e42a466481756962d8ef3263172aa267912f525de50c7a171a1e20fc6922211b",
+      "bytes": 89,
+      "command": "stat -c '%U:%G %a %n' /opt/ros/humble/setup.bash /home/rpp/rpp_ws/install/setup.bash",
+      "captured_at_utc": "2026-09-23T01:33:31Z"
+    },
+    {
+      "path": "commands/0004-topic-echo-once-industrial-box-pose-base.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 topic echo --once /industrial_box/pose_base",
+      "captured_at_utc": "2026-09-23T01:33:39Z"
+    },
+    {
+      "path": "commands/0005-topic-echo-once-industrial-box-status.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 topic echo --once /industrial_box/status",
+      "captured_at_utc": "2026-09-23T01:33:39Z"
+    },
+    {
+      "path": "interfaces.json",
+      "sha256": "05bf6876c3037e14a9255c75fd65b96f7b07928d5c06f5689586552a24c19073",
+      "bytes": 1078,
+      "command": "workstation interface result record",
+      "captured_at_utc": "2026-09-23T01:34:07Z"
+    },
+    {
+      "path": "run-notes.md",
+      "sha256": "d6e46f22b53226c3f5352880c456235ca033fadbee7fc6fd061a5ede400b5f59",
+      "bytes": 1224,
+      "command": "workstation run notes",
+      "captured_at_utc": "2026-09-23T01:34:07Z"
+    }
+  ],
+  "sha256_algorithm": "sha256"
+}

@@ -1,0 +1,5 @@
+sequence	command	artifact	exit_status	captured_at_utc
+1	date -Is	inventory-artifacts/20260923T015005Z-box-trigger-retry/commands/0001-date-Is.txt	0	2026-09-23T01:50:31Z
+2	source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 30s ros2 topic echo --once /industrial_box/pose_base	inventory-artifacts/20260923T015005Z-box-trigger-retry/commands/0002-topic-echo-once-industrial-box-pose-base.txt	0	2026-09-23T01:50:40Z
+3	source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 30s ros2 topic echo --once /industrial_box/status	inventory-artifacts/20260923T015005Z-box-trigger-retry/commands/0003-topic-echo-once-industrial-box-status.txt	0	2026-09-23T01:50:41Z
+4	source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 20s ros2 service call /industrial_box/trigger std_srvs/srv/Trigger "{}"	inventory-artifacts/20260923T015005Z-box-trigger-retry/commands/0004-service-call-industrial-box-trigger.txt	124	2026-09-23T01:50:59Z

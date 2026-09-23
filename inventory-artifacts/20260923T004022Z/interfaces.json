@@ -1,0 +1,85 @@
+{
+  "inventory_status": "stopped_dual_arm_controller_and_safety_evidence_absent",
+  "ssh_session_established": true,
+  "workspace_review_completed": true,
+  "ros_graph_observed": true,
+  "selected_environment": {
+    "ROS_DOMAIN_ID": "0",
+    "ROS_LOCALHOST_ONLY": null
+  },
+  "graph_summary": {
+    "node_list_status": 0,
+    "node_count": 0,
+    "topic_list_status": 0,
+    "topics": [
+      "/parameter_events",
+      "/rosout"
+    ],
+    "service_list_verbose_status": 2,
+    "service_list_verbose_error": "unrecognized arguments: -v",
+    "action_list_verbose_status": 2,
+    "action_list_verbose_error": "unrecognized arguments: -v"
+  },
+  "subsystems": {
+    "chassis": {
+      "interface_observed": false,
+      "present": false,
+      "reason": "no subsystem topic in successful topic graph"
+    },
+    "localization": {
+      "interface_observed": false,
+      "present": false,
+      "reason": "no subsystem topic in successful topic graph"
+    },
+    "waist": {
+      "interface_observed": false,
+      "present": false,
+      "reason": "no subsystem topic in successful topic graph"
+    },
+    "left_arm": {
+      "interface_observed": false,
+      "present": false,
+      "reason": "no subsystem topic in successful topic graph"
+    },
+    "right_arm": {
+      "interface_observed": false,
+      "present": false,
+      "reason": "no subsystem topic in successful topic graph"
+    },
+    "dual_arm_controller": {
+      "interface_observed": false,
+      "present": null,
+      "reason": "no feedback topic in successful topic graph; verbose action inventory unavailable",
+      "reviewed_controller_evidence_present": false,
+      "safety_evidence_present": false
+    },
+    "left_gripper": {
+      "interface_observed": false,
+      "present": false,
+      "reason": "no subsystem topic in successful topic graph"
+    },
+    "right_gripper": {
+      "interface_observed": false,
+      "present": false,
+      "reason": "no subsystem topic in successful topic graph"
+    },
+    "box_perception_pose": {
+      "interface_observed": false,
+      "present": false,
+      "reason": "no subsystem topic in successful topic graph"
+    },
+    "box_perception_status": {
+      "interface_observed": false,
+      "present": false,
+      "reason": "no subsystem topic in successful topic graph"
+    }
+  },
+  "evidence": [
+    "commands/0003-stat-cUGanoptroshumblesetup.bashhomerpprpp_wsins.txt",
+    "commands/0006-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt",
+    "commands/0007-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt",
+    "commands/0008-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt",
+    "commands/0009-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt",
+    "commands/0010-sourceoptroshumblesetup.bashsourcehomerpprpp_wsi.txt"
+  ]
+}

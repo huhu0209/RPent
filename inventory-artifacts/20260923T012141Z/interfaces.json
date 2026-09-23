@@ -1,0 +1,93 @@
+{
+  "inventory_status": "completed_read_only_list_type_info_scope",
+  "ssh_session_established": true,
+  "workspace_review_completed": true,
+  "ros_graph_observed": true,
+  "selected_environment": {
+    "ROS_DOMAIN_ID": "3",
+    "ROS_LOCALHOST_ONLY": "0"
+  },
+  "graph_summary": {
+    "node_list_status": 0,
+    "node_count": 12,
+    "topic_list_status": 0,
+    "service_list_verbose_status": 2,
+    "service_list_verbose_error": "unrecognized arguments: -v",
+    "service_list_status": 0,
+    "service_count": 134,
+    "action_list_verbose_status": 2,
+    "action_list_verbose_error": "unrecognized arguments: -v",
+    "action_list_status": 0,
+    "action_count": 4
+  },
+  "subsystems": {
+    "box_perception_pose": {
+      "node": "/industrial_box_pose_node_v3",
+      "topic": "/industrial_box/pose_base",
+      "type": "geometry_msgs/msg/PoseStamped",
+      "publisher_count": 1,
+      "graph_present": true,
+      "interface_metadata_validated": true,
+      "sample_read": false,
+      "sample_status": "not_run_outside_list_type_info_authorization"
+    },
+    "box_perception_status": {
+      "node": "/industrial_box_pose_node_v3",
+      "topic": "/industrial_box/status",
+      "type": "std_msgs/msg/String",
+      "publisher_count": 1,
+      "graph_present": true,
+      "interface_metadata_validated": true,
+      "sample_read": false,
+      "sample_status": "not_run_outside_list_type_info_authorization"
+    },
+    "box_perception_trigger": {
+      "service": "/industrial_box/trigger",
+      "type": "std_srvs/srv/Trigger",
+      "graph_present": true,
+      "called": false
+    },
+    "dual_arm_planner": {
+      "node": "/plan_arm_simple_server",
+      "services": [
+        {
+          "name": "/plan_arm_simple/compute_trajectory",
+          "type": "plan_arm_simple_msgs/srv/PlanArmSimple"
+        },
+        {
+          "name": "/plan_arm_simple/check_dual_collision",
+          "type": "plan_arm_simple_msgs/srv/CheckDualCollision"
+        },
+        {
+          "name": "/plan_arm_simple/get_ik_candidates",
+          "type": "plan_arm_simple_msgs/srv/GetIkCandidates"
+        }
+      ],
+      "interface_definitions_available": false,
+      "definition_failure": "Unknown package 'plan_arm_simple_msgs'",
+      "coordination_mode": "unresolved",
+      "called": false
+    },
+    "gripper_actions": {
+      "actions": [
+        "/left_bio_gripper/gripper_action",
+        "/left_xarm_gripper/gripper_action",
+        "/right_bio_gripper/gripper_action",
+        "/right_xarm_gripper/gripper_action"
+      ],
+      "goal_sent": false
+    }
+  },
+  "evidence": [
+    "commands/0005-sourceoptroshumblesetup.bashsourcehomerpprpp_wsinstallsetup.bashROS_DOMAIN_ID3timeout10sros2nodelist.txt",
+    "commands/0006-sourceoptroshumblesetup.bashsourcehomerpprpp_wsinstallsetup.bashROS_DOMAIN_ID3timeout10sros2topiclist-v.txt",
+    "commands/0009-sourceoptroshumblesetup.bashsourcehomerpprpp_wsinstallsetup.bashROS_DOMAIN_ID3timeout10sros2servicelist.txt",
+    "commands/0010-sourceoptroshumblesetup.bashsourcehomerpprpp_wsinstallsetup.bashROS_DOMAIN_ID3timeout10sros2actionlist.txt",
+    "commands/0011-service-type-industrial-box-trigger.txt",
+    "commands/0012-service-type-plan-arm-simple-compute-trajectory.txt",
+    "commands/0013-service-type-plan-arm-simple-check-dual-collision.txt",
+    "commands/0014-service-type-plan-arm-simple-get-ik-candidates.txt",
+    "commands/0015-topic-info-v-industrial-box-pose-base.txt",
+    "commands/0016-topic-info-v-industrial-box-status.txt"
+  ]
+}

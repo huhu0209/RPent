@@ -1,0 +1,60 @@
+{
+  "manifest_version": 1,
+  "created_at_utc": "2026-09-23T01:50:05Z",
+  "robot": "robot1",
+  "runbook_sha256": "5c1fedb7868362c0615fac354be12c20d1f39fd7b481c5850f204516e0e06c4c",
+  "authorization_reference": "user-chat-box-trigger-retry-after-boxes-placed-2026-09-23T09:50+08:00",
+  "operator_notes": "User asked for one retry after placing boxes in front of Robot One. The retry produced a successful status prefix and a base_link box pose. The trigger client itself timed out, but the one-shot pose/status subscribers captured the successful inference outputs.",
+  "artifacts": [
+    {
+      "path": "command-index.tsv",
+      "sha256": "5d46d4a7eddbe6274f9982cc7fd68ddab1ed3d30a56ef0b62b39e87b801defb8",
+      "bytes": 1064,
+      "command": "workstation command index",
+      "captured_at_utc": "2026-09-23T01:52:53Z"
+    },
+    {
+      "path": "commands/0001-date-Is.txt",
+      "sha256": "a4c4e6acb4608349a472340f6d14885ea77106051b10733b268e891c9ddba87e",
+      "bytes": 26,
+      "command": "date -Is",
+      "captured_at_utc": "2026-09-23T01:50:31Z"
+    },
+    {
+      "path": "commands/0002-topic-echo-once-industrial-box-pose-base.txt",
+      "sha256": "fff4c589e267bb2a3e8fc82b2be442fb16191ac2fa86001dada4712426014551",
+      "bytes": 307,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 30s ros2 topic echo --once /industrial_box/pose_base",
+      "captured_at_utc": "2026-09-23T01:50:40Z"
+    },
+    {
+      "path": "commands/0003-topic-echo-once-industrial-box-status.txt",
+      "sha256": "8b2599ab8f6e5593011f6e62ad2af9a233bfd40538ac904bc4818deae3b59a5e",
+      "bytes": 144,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 30s ros2 topic echo --once /industrial_box/status",
+      "captured_at_utc": "2026-09-23T01:50:41Z"
+    },
+    {
+      "path": "commands/0004-service-call-industrial-box-trigger.txt",
+      "sha256": "6ca143fc313ad4e85c316194a03e7b5fc3590f160579102b1b424d70916f44ce",
+      "bytes": 102,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 20s ros2 service call /industrial_box/trigger std_srvs/srv/Trigger \"{}\"",
+      "captured_at_utc": "2026-09-23T01:50:59Z"
+    },
+    {
+      "path": "interfaces.json",
+      "sha256": "c4a3a625028b950ac6dc5b6277dde9c886fc546694d061d1d48664b0fa4b9f84",
+      "bytes": 1545,
+      "command": "workstation interface result record",
+      "captured_at_utc": "2026-09-23T01:52:53Z"
+    },
+    {
+      "path": "run-notes.md",
+      "sha256": "316d1ab2172e341f731b852b79008ea9d97054e9290486b729b2e5de558461d1",
+      "bytes": 1760,
+      "command": "workstation run notes",
+      "captured_at_utc": "2026-09-23T01:52:53Z"
+    }
+  ],
+  "sha256_algorithm": "sha256"
+}

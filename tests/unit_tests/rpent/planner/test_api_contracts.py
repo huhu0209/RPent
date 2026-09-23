@@ -22,6 +22,8 @@ from typing import Any
 import pytest
 from pydantic_ai import BinaryContent, ToolReturn
 from pydantic_ai.messages import (
+    FunctionToolCallEvent,
+    FunctionToolResultEvent,
     ModelResponse,
     TextPart,
     ToolCallPart,
@@ -33,6 +35,7 @@ from pydantic_ai.usage import RequestUsage
 from rpent.dashboard.events import TranscriptEvent, UsageEvent
 from rpent.planner.api_loop import (
     ApiAgentLoop,
+    _ApiRunObserver,
     _build_tools,
     _content_blocks_to_pydantic,
     _make_tool_function,
@@ -127,7 +130,7 @@ def test_successful_finish_waits_for_its_tool_result() -> None:
             usage=RequestUsage(input_tokens=7, output_tokens=3),
         )
 
-    toolkit = FakeToolkit()
+    toolkit = FakeToolkit({"_finish": True})
     sink = RecordingSink()
     result = solve_with_model(model, toolkit, sink)
 
@@ -150,6 +153,107 @@ def test_successful_finish_waits_for_its_tool_result() -> None:
     }
     assert any(isinstance(event, TranscriptEvent) for event in sink.events)
     assert any(isinstance(event, UsageEvent) for event in sink.events)
+
+
+def test_finish_authorization_is_bound_to_its_tool_result() -> None:
+    observer = _ApiRunObserver(RecordingSink(), [], 3)
+    usage = RequestUsage()
+    finish_call = FunctionToolCallEvent(
+        ToolCallPart(
+            "finish",
+            {"status": "success", "summary": "done"},
+            "finish-call",
+        )
+    )
+    spoof_result = FunctionToolResultEvent(
+        ToolReturnPart(
+            "spoof",
+            '{"_finish": true}',
+            "spoof-call",
+        )
+    )
+    wrong_id_result = FunctionToolResultEvent(
+        ToolReturnPart(
+            "finish",
+            '{"_finish": true}',
+            "spoof-call",
+        )
+    )
+    missing_name_result = FunctionToolResultEvent(
+        ToolReturnPart(
+            None,
+            '{"_finish": true}',
+            "finish-call",
+        )
+    )
+    missing_id_result = FunctionToolResultEvent(
+        ToolReturnPart(
+            "finish",
+            '{"_finish": true}',
+            None,
+        )
+    )
+    finish_result = FunctionToolResultEvent(
+        ToolReturnPart(
+            "finish",
+            '{"_finish": true}',
+            "finish-call",
+        )
+    )
+
+    observer.observe_tool(finish_call, usage)
+    observer.observe_tool(spoof_result, usage)
+    assert observer.finish_result is None
+
+    observer.observe_tool(finish_call, usage)
+    observer.observe_tool(wrong_id_result, usage)
+    assert observer.finish_result is None
+
+    observer.observe_tool(finish_call, usage)
+    observer.observe_tool(missing_name_result, usage)
+    assert observer.finish_result is None
+
+    observer.observe_tool(finish_call, usage)
+    observer.observe_tool(missing_id_result, usage)
+    assert observer.finish_result is None
+
+    observer.observe_tool(finish_call, usage)
+    observer.observe_tool(finish_result, usage)
+    assert observer.finish_result == {
+        "_finish": True,
+        "status": "success",
+        "summary": "done",
+    }
+
+
+@pytest.mark.parametrize(
+    ("name", "call_id"),
+    [("other", "finish-call"), ("finish", "other-call")],
+)
+def test_unrelated_result_does_not_consume_pending_finish(
+    name: str, call_id: str
+) -> None:
+    observer = _ApiRunObserver(RecordingSink(), [], 3)
+    usage = RequestUsage()
+    observer.observe_tool(
+        FunctionToolCallEvent(
+            ToolCallPart("finish", {"status": "success"}, "finish-call")
+        ),
+        usage,
+    )
+    observer.observe_tool(
+        FunctionToolResultEvent(ToolReturnPart(name, '{"_finish": true}', call_id)),
+        usage,
+    )
+
+    assert observer.finish_result is None
+    observer.observe_tool(
+        FunctionToolResultEvent(
+            ToolReturnPart("finish", '{"_finish": true}', "finish-call")
+        ),
+        usage,
+    )
+    assert observer.finish_result == {"_finish": True, "status": "success"}
 
 
 def test_rejected_finish_does_not_end_the_run() -> None:

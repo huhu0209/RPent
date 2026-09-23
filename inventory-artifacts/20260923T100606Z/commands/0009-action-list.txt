@@ -1,0 +1,4 @@
+/left_bio_gripper/gripper_action
+/left_xarm_gripper/gripper_action
+/right_bio_gripper/gripper_action
+/right_xarm_gripper/gripper_action

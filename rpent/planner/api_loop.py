@@ -387,6 +387,7 @@ class _ApiRunObserver:
     tool_calls: int = 0
     finish_result: dict[str, Any] | None = None
     pending_finish: dict[str, Any] | None = None
+    pending_finish_call_id: str | None = None
 
     def observe_response(
         self,
@@ -427,6 +428,7 @@ class _ApiRunObserver:
             )
             if part.tool_name == "finish":
                 self.pending_finish = {"_finish": True, **args}
+                self.pending_finish_call_id = part.tool_call_id
         elif isinstance(event, FunctionToolResultEvent):
             completed = True
             message = _serialize_tool_result(event)
@@ -434,10 +436,23 @@ class _ApiRunObserver:
             _log_tool_result(message)
             part = event.part
             is_error = bool(getattr(part, "is_error", False))
-            if self.pending_finish is not None:
-                if not is_error and "finish refused" not in str(message):
+            if self.pending_finish is not None and self._result_belongs_to_pending_finish(
+                message.get("name"), part.tool_call_id
+            ):
+                content = message.get("content")
+                try:
+                    finish_payload = json.loads(content)
+                except (TypeError, json.JSONDecodeError):
+                    finish_payload = None
+                finish_authorized = (
+                    not is_error
+                    and isinstance(finish_payload, dict)
+                    and finish_payload.get("_finish") is True
+                )
+                if finish_authorized:
                     self.finish_result = self.pending_finish
                 self.pending_finish = None
+                self.pending_finish_call_id = None
             self.dashboard_events.emit(
                 TranscriptEvent(
                     {
@@ -460,6 +475,18 @@ class _ApiRunObserver:
                 out=int(usage.output_tokens or 0),
                 tool_calls=self.tool_calls,
             )
+        )
+
+    def _result_belongs_to_pending_finish(
+        self,
+        result_name: Any,
+        result_call_id: Any,
+    ) -> bool:
+        return (
+            result_name == "finish"
+            and isinstance(result_call_id, str)
+            and bool(result_call_id)
+            and result_call_id == self.pending_finish_call_id
         )
 
 

@@ -1,0 +1,316 @@
+{
+  "manifest_version": 1,
+  "created_at_utc": "2026-09-23T10:16:36.427Z",
+  "robot": "robot1",
+  "ros_domain_id": 3,
+  "runbook_sha256": "9c3cbb4c001188a0e4f6487925ab03def1653618a1451efbe01ce42cd2e4e304",
+  "authorization_reference": "User approved operator=huhu, Robot One ROS_DOMAIN_ID=3, this runbook SHA, and read-only list/type/info/single echo on 2026-09-23; no service call, cancel, perception trigger, initialization, or motion.",
+  "operator_notes": "Workstation operator huhu; SSH account zxh. Sources stat-reviewed before use. service/action list -v unavailable (exit 2), retried once without -v. Default ROS_DOMAIN_ID unset (printenv exit 1); explicit ROS_DOMAIN_ID=3 used for all ROS observations. One sample does not prove freshness or cancellation.",
+  "sha256_algorithm": "sha256",
+  "artifacts": [
+    {
+      "path": "commands/0001-date-Is.txt",
+      "sha256": "c6adc27ae6525eaf1d9377d8420d6aaba97b9db59851708c513b956bca4235af",
+      "bytes": 26,
+      "command": "date -Is",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:06:51Z"
+    },
+    {
+      "path": "commands/0002-readlink-rpp-ws.txt",
+      "sha256": "4075e551f154f61a69a7e8cca4a6c78248c5891433276988274990f7d22482b6",
+      "bytes": 17,
+      "command": "readlink -f /home/rpp/rpp_ws",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:07:06Z"
+    },
+    {
+      "path": "commands/0003-stat-setup.txt",
+      "sha256": "e42a466481756962d8ef3263172aa267912f525de50c7a171a1e20fc6922211b",
+      "bytes": 89,
+      "command": "stat -c '%U:%G %a %n' /opt/ros/humble/setup.bash /home/rpp/rpp_ws/install/setup.bash",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:07:13Z"
+    },
+    {
+      "path": "commands/0004-node-list.txt",
+      "sha256": "679c627b5950081a3e4c8a5c5fa5c965c890c7765c20edb60f5a4d3bfebc3670",
+      "bytes": 359,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 node list",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:09:18Z"
+    },
+    {
+      "path": "commands/0005-topic-list-v.txt",
+      "sha256": "d12e72a23450b8ea4d7c57d79258f82cae17cdc71e9c252b199a7c26ed75b414",
+      "bytes": 5183,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic list -v",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:09:39Z"
+    },
+    {
+      "path": "commands/0006-service-list-v.txt",
+      "sha256": "5d84eb3fc229f2a3584eaa765b0d420bca620524f0adbbdc686547b01b9c963e",
+      "bytes": 156,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 service list -v",
+      "exit_code": 2,
+      "captured_at_utc": "2026-09-23T10:09:57Z"
+    },
+    {
+      "path": "commands/0007-service-list.txt",
+      "sha256": "0ca5cb3405a71c6d3c64c61ae5d782d86a52af28d4580b02636e743751f7f3d9",
+      "bytes": 5795,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 service list",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:10:26Z"
+    },
+    {
+      "path": "commands/0008-action-list-v.txt",
+      "sha256": "5d84eb3fc229f2a3584eaa765b0d420bca620524f0adbbdc686547b01b9c963e",
+      "bytes": 156,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 action list -v",
+      "exit_code": 2,
+      "captured_at_utc": "2026-09-23T10:10:35Z"
+    },
+    {
+      "path": "commands/0009-action-list.txt",
+      "sha256": "1bdfad24a65bd432b5da0982692352e88bd56492385beace2813e0b2460d060e",
+      "bytes": 136,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 action list",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:10:45Z"
+    },
+    {
+      "path": "commands/0010-topic-info-left_xarm-joint_states.txt",
+      "sha256": "1f60415c61d62aab2ea5d2eca0e8892c4076eb3d365b20715f165219fe92cecf",
+      "bytes": 847,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic info -v /left_xarm/joint_states",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:11:26Z"
+    },
+    {
+      "path": "commands/0011-topic-info-right_xarm-joint_states.txt",
+      "sha256": "d4307228b8dc211809b356fe4c231ea01cd8565401934cbd65668efcb47aa3b5",
+      "bytes": 848,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic info -v /right_xarm/joint_states",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:11:27Z"
+    },
+    {
+      "path": "commands/0012-topic-info-left-wrench.txt",
+      "sha256": "959c8795add5ffe95d5733db91bb3f72618e3f740a0bc70015b4dc8cc9fc2fb5",
+      "bytes": 472,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic info -v /left/wrench",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:11:27Z"
+    },
+    {
+      "path": "commands/0013-topic-info-right-wrench.txt",
+      "sha256": "6fd4e42a4aa8036ea4dd89862eb09aae24ae355b9d0a367f302868b6df518e05",
+      "bytes": 473,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic info -v /right/wrench",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:11:28Z"
+    },
+    {
+      "path": "commands/0014-topic-info-left-joint_states.txt",
+      "sha256": "a524299b41f9ec1e008994a13631a136b2ccb067831bf0139ed6a020b303c2b0",
+      "bytes": 849,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic info -v /left/joint_states",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:11:29Z"
+    },
+    {
+      "path": "commands/0015-topic-info-right-joint_states.txt",
+      "sha256": "b5674ff0f2c8af7e00ea7f6d3925d87b1efd4dee5ef71326857b72ae365a47b6",
+      "bytes": 850,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic info -v /right/joint_states",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:11:30Z"
+    },
+    {
+      "path": "commands/0016-topic-info-motor_lift-joint_states.txt",
+      "sha256": "aa7870ba95db360a6f2310675bbc256a0563f2209b9de1bd9c6949446914d74a",
+      "bytes": 846,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic info -v /motor_lift/joint_states",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:11:30Z"
+    },
+    {
+      "path": "commands/0017-topic-info-odom.txt",
+      "sha256": "a6094e9407a513739e8d622f9df290a263187d4880bc5b6cc3cb1c67622a9bbb",
+      "bytes": 444,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic info -v /odom",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:11:31Z"
+    },
+    {
+      "path": "commands/0018-topic-info-error_state.txt",
+      "sha256": "e42b896db9c0645685b60f7503217a6c836ddd0f9405414b5f9308dd4fcd91d3",
+      "bytes": 448,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic info -v /error_state",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:11:32Z"
+    },
+    {
+      "path": "commands/0019-topic-echo-left_xarm-joint_states.txt",
+      "sha256": "57d0b696a044e9b277e80782157a605df9686e6845460fc8521b3941b2f1bc8a",
+      "bytes": 525,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic echo --once /left_xarm/joint_states",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:12:00Z"
+    },
+    {
+      "path": "commands/0020-topic-echo-right_xarm-joint_states.txt",
+      "sha256": "ea57d6cbe322dcddc1cf6cb16f9905977dce4ec7763b287bc2c805bf7ce4bacb",
+      "bytes": 527,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic echo --once /right_xarm/joint_states",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:12:02Z"
+    },
+    {
+      "path": "commands/0021-topic-echo-left-wrench.txt",
+      "sha256": "ec0874925f8dda539d6e51f4c1390d0fc6e61d75e9c31324ed94adaa8f67a7a5",
+      "bytes": 284,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic echo --once /left/wrench",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:12:03Z"
+    },
+    {
+      "path": "commands/0022-topic-echo-right-wrench.txt",
+      "sha256": "211c439323f0ffe7beb2672d8d07b937bfef5227a5ef3c0b95937f0953d295cd",
+      "bytes": 285,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic echo --once /right/wrench",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:12:05Z"
+    },
+    {
+      "path": "commands/0023-topic-echo-left-joint_states.txt",
+      "sha256": "e7e7fa4d7c5076f5898e624db364ed0756642a45d8788b29f7497420a8c8fad2",
+      "bytes": 154,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic echo --once /left/joint_states",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:12:06Z"
+    },
+    {
+      "path": "commands/0024-topic-echo-right-joint_states.txt",
+      "sha256": "a68226747f6e176e151fa74e600f1fa2f117d5e2712b22c5b8361e9911d0e71e",
+      "bytes": 156,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic echo --once /right/joint_states",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:12:08Z"
+    },
+    {
+      "path": "commands/0025-topic-echo-motor_lift-joint_states.txt",
+      "sha256": "76dd5376732d800c3dbe281b4900810a43eaa3d86e71416ba09e5bb75b7761a0",
+      "bytes": 161,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic echo --once /motor_lift/joint_states",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:12:09Z"
+    },
+    {
+      "path": "commands/0026-topic-echo-odom.txt",
+      "sha256": "73b2c29591dae034f3833b5ac2f91bb8b4fd7c096aa4d037e62e0715417cb553",
+      "bytes": 1094,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic echo --once /odom",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:12:11Z"
+    },
+    {
+      "path": "commands/0027-topic-echo-error_state.txt",
+      "sha256": "4d905204dc227b70c35a71daae7190e4b1667ed664401999751304223061c23b",
+      "bytes": 100,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic echo --once /error_state",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:12:13Z"
+    },
+    {
+      "path": "commands/0028-topic-info-left_xarm-robot_states.txt",
+      "sha256": "4c7d512b20d7a25464594ae1ee0a6c1206e5a4de380271349e1fbf4ce57a5eaf",
+      "bytes": 452,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic info -v /left_xarm/robot_states",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:13:05Z"
+    },
+    {
+      "path": "commands/0029-topic-echo-left_xarm-robot_states.txt",
+      "sha256": "3c3f8956e12a43d7c2697c9677ecbf35bcc7063bf7f7a50da0563ef969c42987",
+      "bytes": 458,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 topic echo --once /left_xarm/robot_states",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:13:07Z"
+    },
+    {
+      "path": "commands/0030-service-type-left_xarm-set_state.txt",
+      "sha256": "abc703e270c40f2b893df248f815472e505a84b4e088e7fb598d13a0e002c7b6",
+      "bytes": 23,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 service type /left_xarm/set_state",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:13:08Z"
+    },
+    {
+      "path": "commands/0031-service-type-left_xarm-motion_enable.txt",
+      "sha256": "3317290074d840174f32a211b1bf0a0aa356029ce183a75eb7a8c3a6f4e7dd2f",
+      "bytes": 27,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 service type /left_xarm/motion_enable",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:13:08Z"
+    },
+    {
+      "path": "commands/0032-action-info-left_xarm_gripper.txt",
+      "sha256": "213b039dfe479167f0918bddeef62a6c1816941ac4adbedba18d09905f6c5db2",
+      "bytes": 104,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 action info /left_xarm_gripper/gripper_action",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:13:09Z"
+    },
+    {
+      "path": "commands/0033-interface-jointstate.txt",
+      "sha256": "7763e136577933d8b4d965d35cb6e5173cbba5f265bfaee1eaea740994ad7b2c",
+      "bytes": 1076,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 interface show sensor_msgs/msg/JointState",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:13:10Z"
+    },
+    {
+      "path": "commands/0034-interface-wrenchstamped.txt",
+      "sha256": "da6ab9fa4384f104c68257d5fe473a5b15d2456ed13d1a82b8a01714af26e6e7",
+      "bytes": 277,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 interface show geometry_msgs/msg/WrenchStamped",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:13:11Z"
+    },
+    {
+      "path": "commands/0035-interface-SetInt16.txt",
+      "sha256": "a95d190abdf86535ebdb231051be6ed518df7147dce80598c863600d8952d9f9",
+      "bytes": 966,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 interface show xarm_msgs/srv/SetInt16",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:13:41Z"
+    },
+    {
+      "path": "commands/0036-interface-RobotMsg.txt",
+      "sha256": "08bad943e5ce475788e7a8b5f112a4916bbaca9d9e56f4fd1d3296547012a8bc",
+      "bytes": 1419,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 timeout 10s ros2 interface show xarm_msgs/msg/RobotMsg",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:13:42Z"
+    },
+    {
+      "path": "commands/0037-env-default.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nprintenv ROS_DOMAIN_ID ROS_LOCALHOST_ONLY",
+      "exit_code": 1,
+      "captured_at_utc": "2026-09-23T10:14:56Z"
+    },
+    {
+      "path": "commands/0038-env-selected.txt",
+      "sha256": "0c2b7cd08e232a460db2c76518a940d33812083554b9b7156b7e3adbbccdd013",
+      "bytes": 4,
+      "command": "source /opt/ros/humble/setup.bash\nsource /home/rpp/rpp_ws/install/setup.bash\nROS_DOMAIN_ID=3 printenv ROS_DOMAIN_ID ROS_LOCALHOST_ONLY",
+      "exit_code": 0,
+      "captured_at_utc": "2026-09-23T10:15:06Z"
+    }
+  ]
+}

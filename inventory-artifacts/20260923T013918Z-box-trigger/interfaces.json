@@ -1,0 +1,40 @@
+{
+  "inventory_status": "completed_one_authorized_box_trigger",
+  "ssh_session_established": true,
+  "selected_environment": {
+    "ROS_DOMAIN_ID": "3",
+    "ROS_LOCALHOST_ONLY": "0"
+  },
+  "subsystems": {
+    "box_perception_trigger": {
+      "service": "/industrial_box/trigger",
+      "type": "std_srvs/srv/Trigger",
+      "requested_once": true,
+      "client_exit_status": 124,
+      "client_response_received": false,
+      "client_output": "requester: making request: std_srvs.srv.Trigger_Request()"
+    },
+    "box_perception_status": {
+      "topic": "/industrial_box/status",
+      "type": "std_msgs/msg/String",
+      "sample_read_during_trigger_window": true,
+      "exit_status": 0,
+      "data": "{\"success\": false, \"request_source\": \"trigger_service_sdk\", \"error_type\": \"RuntimeError\", \"error\": \"Merged mask contains no vali...\"}"
+    },
+    "box_perception_pose": {
+      "topic": "/industrial_box/pose_base",
+      "type": "geometry_msgs/msg/PoseStamped",
+      "sample_read": false,
+      "pre_trigger_exit_status": 124,
+      "post_trigger_exit_status": 124,
+      "sample_status": "no_pose_published_after_failed_inference"
+    }
+  },
+  "evidence": [
+    "commands/0002-topic-echo-once-industrial-box-pose-base.txt",
+    "commands/0003-topic-echo-once-industrial-box-status.txt",
+    "commands/0004-service-call-industrial-box-trigger.txt",
+    "commands/0005-post-trigger-topic-echo-once-industrial-box-pose-base.txt",
+    "commands/0006-post-trigger-topic-echo-once-industrial-box-status.txt"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "inventory_status": "completed_box_topic_sample_read_only",
+  "ssh_session_established": true,
+  "workspace_review_completed": true,
+  "selected_environment": {
+    "ROS_DOMAIN_ID": "3",
+    "ROS_LOCALHOST_ONLY": "0"
+  },
+  "subsystems": {
+    "box_perception_pose": {
+      "topic": "/industrial_box/pose_base",
+      "type": "geometry_msgs/msg/PoseStamped",
+      "graph_present_from_prior_evidence": true,
+      "sample_read": false,
+      "sample_status": "timeout_status_124_no_message_in_10s",
+      "captured_bytes": 0
+    },
+    "box_perception_status": {
+      "topic": "/industrial_box/status",
+      "type": "std_msgs/msg/String",
+      "graph_present_from_prior_evidence": true,
+      "sample_read": false,
+      "sample_status": "timeout_status_124_no_message_in_10s",
+      "captured_bytes": 0
+    },
+    "box_perception_trigger": {
+      "service": "/industrial_box/trigger",
+      "called": false
+    }
+  },
+  "evidence": [
+    "commands/0004-topic-echo-once-industrial-box-pose-base.txt",
+    "commands/0005-topic-echo-once-industrial-box-status.txt"
+  ]
+}

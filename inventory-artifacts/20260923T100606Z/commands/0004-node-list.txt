@@ -1,0 +1,16 @@
+/camera/camera
+/industrial_box_pose_node_v3
+/joint_state_publisher
+/left/crt_gripper_driver
+/left/force_sense_driver
+/left_ufactory_driver
+/livox_node
+/motor_lift_ros_node
+/plan_arm_simple_server
+/right/crt_gripper_driver
+/right/force_sense_driver
+/right_ufactory_driver
+/robot_state_publisher
+/rpp_ros_driver
+/rqt_gui_cpp_node_460341
+/rqt_gui_py_node_460341

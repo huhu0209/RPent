@@ -1,0 +1,165 @@
+{
+  "manifest_version": 1,
+  "created_at_utc": "2026-09-23T01:21:41Z",
+  "robot": "robot1",
+  "runbook_sha256": "5c1fedb7868362c0615fac354be12c20d1f39fd7b481c5850f204516e0e06c4c",
+  "authorization_reference": "user-chat-new-service-read-only-list-type-info-2026-09-23T09:21+08:00",
+  "operator_notes": "User authorized a narrower read-only interface detection for the newly available Robot One service: list/type/info only. The box perception node and pose/status topics are live; no topic sample, service call, action goal, trigger, or state change was executed.",
+  "artifacts": [
+    {
+      "path": "command-index.tsv",
+      "sha256": "4a3c1cc22a9c20f9f19087285f4a87e251bdc4fc3bcbb69c26cbcab7bd133bf9",
+      "bytes": 5265,
+      "command": "workstation command index",
+      "captured_at_utc": "2026-09-23T01:27:32Z"
+    },
+    {
+      "path": "commands/0001-date-Is.txt",
+      "sha256": "e15964f84fa2db114f2e47dadfad0416d3a7a604a3a4f0c6eee3d51209c46bf2",
+      "bytes": 26,
+      "command": "date -Is",
+      "captured_at_utc": "2026-09-23T01:23:33Z"
+    },
+    {
+      "path": "commands/0002-readlink-fhomerpprpp_ws.txt",
+      "sha256": "4075e551f154f61a69a7e8cca4a6c78248c5891433276988274990f7d22482b6",
+      "bytes": 17,
+      "command": "readlink -f /home/rpp/rpp_ws",
+      "captured_at_utc": "2026-09-23T01:23:45Z"
+    },
+    {
+      "path": "commands/0003-stat-cUGanoptroshumblesetup.bashhomerpprpp_wsins.txt",
+      "sha256": "e42a466481756962d8ef3263172aa267912f525de50c7a171a1e20fc6922211b",
+      "bytes": 89,
+      "command": "stat -c '%U:%G %a %n' /opt/ros/humble/setup.bash /home/rpp/rpp_ws/install/setup.bash",
+      "captured_at_utc": "2026-09-23T01:23:45Z"
+    },
+    {
+      "path": "commands/0004-sourceoptroshumblesetup.bashsourcehomerpprpp_wsinstallsetup.bashROS_DOMAIN_ID3printenvROS_DOMAIN_IDROS_LOCALHOST_ONLY.txt",
+      "sha256": "0c2b7cd08e232a460db2c76518a940d33812083554b9b7156b7e3adbbccdd013",
+      "bytes": 4,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 printenv ROS_DOMAIN_ID ROS_LOCALHOST_ONLY",
+      "captured_at_utc": "2026-09-23T01:24:01Z"
+    },
+    {
+      "path": "commands/0005-sourceoptroshumblesetup.bashsourcehomerpprpp_wsinstallsetup.bashROS_DOMAIN_ID3timeout10sros2nodelist.txt",
+      "sha256": "fd8bbc48e5f52e8774bd0616eab70c7b35ae953a17167371e7ab1a3855e8f92b",
+      "bytes": 283,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 node list",
+      "captured_at_utc": "2026-09-23T01:24:02Z"
+    },
+    {
+      "path": "commands/0006-sourceoptroshumblesetup.bashsourcehomerpprpp_wsinstallsetup.bashROS_DOMAIN_ID3timeout10sros2topiclist-v.txt",
+      "sha256": "80db4e56a1034e077fe4030026cfad64c5533494dcdf2f3d7d795451053a533b",
+      "bytes": 3875,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 topic list -v",
+      "captured_at_utc": "2026-09-23T01:24:02Z"
+    },
+    {
+      "path": "commands/0007-sourceoptroshumblesetup.bashsourcehomerpprpp_wsinstallsetup.bashROS_DOMAIN_ID3timeout10sros2servicelist-v.txt",
+      "sha256": "5d84eb3fc229f2a3584eaa765b0d420bca620524f0adbbdc686547b01b9c963e",
+      "bytes": 156,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 service list -v",
+      "captured_at_utc": "2026-09-23T01:24:13Z"
+    },
+    {
+      "path": "commands/0008-sourceoptroshumblesetup.bashsourcehomerpprpp_wsinstallsetup.bashROS_DOMAIN_ID3timeout10sros2actionlist-v.txt",
+      "sha256": "5d84eb3fc229f2a3584eaa765b0d420bca620524f0adbbdc686547b01b9c963e",
+      "bytes": 156,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 action list -v",
+      "captured_at_utc": "2026-09-23T01:24:13Z"
+    },
+    {
+      "path": "commands/0009-sourceoptroshumblesetup.bashsourcehomerpprpp_wsinstallsetup.bashROS_DOMAIN_ID3timeout10sros2servicelist.txt",
+      "sha256": "b1d13f8a3dfe117d6564f0b10479445a94557e4962ea5add6af8904ad7b53348",
+      "bytes": 4852,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 service list",
+      "captured_at_utc": "2026-09-23T01:24:21Z"
+    },
+    {
+      "path": "commands/0010-sourceoptroshumblesetup.bashsourcehomerpprpp_wsinstallsetup.bashROS_DOMAIN_ID3timeout10sros2actionlist.txt",
+      "sha256": "1bdfad24a65bd432b5da0982692352e88bd56492385beace2813e0b2460d060e",
+      "bytes": 136,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 action list",
+      "captured_at_utc": "2026-09-23T01:24:21Z"
+    },
+    {
+      "path": "commands/0011-service-type-industrial-box-trigger.txt",
+      "sha256": "7b501061e2d206cca2fe9030a8d274e4209f7ab001cd810698192273e5f56dc8",
+      "bytes": 21,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 service type /industrial_box/trigger",
+      "captured_at_utc": "2026-09-23T01:24:57Z"
+    },
+    {
+      "path": "commands/0012-service-type-plan-arm-simple-compute-trajectory.txt",
+      "sha256": "e34cf53c0dc8cc259f6a71877ec1543c2f28f5f412bb09b508f66f3260a5425b",
+      "bytes": 39,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 service type /plan_arm_simple/compute_trajectory",
+      "captured_at_utc": "2026-09-23T01:24:57Z"
+    },
+    {
+      "path": "commands/0013-service-type-plan-arm-simple-check-dual-collision.txt",
+      "sha256": "25a223a4cfae868c87894a03db581de6ddde5f005b3a58dffb9ca1923481e578",
+      "bytes": 44,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 service type /plan_arm_simple/check_dual_collision",
+      "captured_at_utc": "2026-09-23T01:24:57Z"
+    },
+    {
+      "path": "commands/0014-service-type-plan-arm-simple-get-ik-candidates.txt",
+      "sha256": "c66cf4673780e50a2e19932e08118f2573d410f9e4b8b480457fbe97fe6d0753",
+      "bytes": 41,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 service type /plan_arm_simple/get_ik_candidates",
+      "captured_at_utc": "2026-09-23T01:24:57Z"
+    },
+    {
+      "path": "commands/0015-topic-info-v-industrial-box-pose-base.txt",
+      "sha256": "bd3384e8fb2772c47359ffd43a951453902c122ee47eb305c9d08f132bc96b76",
+      "bytes": 473,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 topic info -v /industrial_box/pose_base",
+      "captured_at_utc": "2026-09-23T01:25:09Z"
+    },
+    {
+      "path": "commands/0016-topic-info-v-industrial-box-status.txt",
+      "sha256": "d15b6a0271327efb3e370495ab4361e00e2f9f2494b21be70dd9113187dd8360",
+      "bytes": 453,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 topic info -v /industrial_box/status",
+      "captured_at_utc": "2026-09-23T01:25:09Z"
+    },
+    {
+      "path": "commands/0017-interface-show-plan-arm-simple-srv-PlanArmSimple.txt",
+      "sha256": "b14ba6775d25f52193a5cee2c3015e62949c85fd300e746d7de6a356046c874e",
+      "bytes": 39,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 interface show plan_arm_simple_msgs/srv/PlanArmSimple",
+      "captured_at_utc": "2026-09-23T01:25:09Z"
+    },
+    {
+      "path": "commands/0018-interface-show-plan-arm-simple-srv-CheckDualCollision.txt",
+      "sha256": "b14ba6775d25f52193a5cee2c3015e62949c85fd300e746d7de6a356046c874e",
+      "bytes": 39,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 interface show plan_arm_simple_msgs/srv/CheckDualCollision",
+      "captured_at_utc": "2026-09-23T01:25:09Z"
+    },
+    {
+      "path": "commands/0019-interface-show-plan-arm-simple-srv-GetIkCandidates.txt",
+      "sha256": "b14ba6775d25f52193a5cee2c3015e62949c85fd300e746d7de6a356046c874e",
+      "bytes": 39,
+      "command": "source /opt/ros/humble/setup.bash; source /home/rpp/rpp_ws/install/setup.bash; ROS_DOMAIN_ID=3 timeout 10s ros2 interface show plan_arm_simple_msgs/srv/GetIkCandidates",
+      "captured_at_utc": "2026-09-23T01:25:09Z"
+    },
+    {
+      "path": "interfaces.json",
+      "sha256": "76f3b6aa1bccffabafb994c19b0af2e878211651997538d7b17488324b5e87ae",
+      "bytes": 3502,
+      "command": "workstation interface result record",
+      "captured_at_utc": "2026-09-23T01:27:32Z"
+    },
+    {
+      "path": "run-notes.md",
+      "sha256": "5e49fa42becc59248d473fede49319e5e413a24c83c8891d878ba34f2e323c37",
+      "bytes": 2331,
+      "command": "workstation run notes",
+      "captured_at_utc": "2026-09-23T01:27:32Z"
+    }
+  ],
+  "sha256_algorithm": "sha256"
+}
