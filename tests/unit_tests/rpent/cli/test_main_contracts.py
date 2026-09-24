@@ -364,6 +364,33 @@ def test_real_robot_terminal_requirement_fails_before_runtime(
     assert "operator confirmation" in capsys.readouterr().err
 
 
+def test_read_only_real_robot_dashboard_capability_is_not_blocked(monkeypatch):
+    cli = _cli_module()
+    spec = SimpleNamespace(
+        is_real_robot=True,
+        supports_dashboard=True,
+        add_cli_args=lambda parser, use_dashboard: None,
+    )
+    monkeypatch.setattr(cli, "get_robot_spec", lambda name: spec)
+    monkeypatch.setattr(cli, "enumerate_robots", lambda: ("custom",))
+    from rpent.cli import dashboard as dashboard_cli
+
+    monkeypatch.setattr(
+        dashboard_cli,
+        "run_dashboard_session",
+        lambda *args, **kwargs: 0,
+    )
+    monkeypatch.setattr(
+        sys,
+        "stdin",
+        SimpleNamespace(isatty=lambda: False),
+    )
+    monkeypatch.setattr(
+        sys, "argv", ["rpent", "--robot", "custom", "--dashboard"]
+    )
+    assert cli.main() == 0
+
+
 def test_handoff_message_lists_prior_attempts_deterministically(tmp_path: Path) -> None:
     cli = _cli_module()
     attempts = tmp_path / "attempts"

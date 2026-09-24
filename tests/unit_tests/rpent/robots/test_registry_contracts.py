@@ -37,6 +37,7 @@ EXPECTED_ROBOTS = (
     "lynsense_real_box",
     "lynsense_simulation",
     "robocasa",
+    "robot_one_readonly",
     "robotwin",
 )
 
@@ -44,6 +45,7 @@ PROMPT_VARIABLES = {
     "lynsense": {},
     "lynsense_real_box": {},
     "lynsense_simulation": {},
+    "robot_one_readonly": {},
     "libero": {
         "suite": "libero_object_task",
         "task": 2,

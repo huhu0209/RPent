@@ -362,12 +362,13 @@ def main() -> int:
     if args.dashboard and args.interactive:
         parser.error("--dashboard and --interactive cannot be used together")
     if robot_spec.is_real_robot and not human_interactive_exploration:
-        if args.dashboard or args.interactive:
+        dashboard_supported = getattr(robot_spec, "supports_dashboard", False)
+        if args.interactive or (args.dashboard and not dashboard_supported):
             parser.error(
                 "This robot requires exclusive terminal input for operator confirmation; "
                 "--dashboard and --interactive are not supported. Run in a plain terminal."
             )
-        if sys.stdin is None or not sys.stdin.isatty():
+        if not args.dashboard and (sys.stdin is None or not sys.stdin.isatty()):
             parser.error("This robot requires a TTY for operator confirmation.")
     if args.base_url and args.planner in BASE_URL_ENV_BY_PLANNER:
         parser.error(

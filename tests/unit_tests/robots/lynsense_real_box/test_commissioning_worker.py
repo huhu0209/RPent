@@ -123,11 +123,162 @@ def _request(tmp_path):
 def test_worker_initializes_collects_reads_then_releases(tmp_path):
     runtime = Runtime()
     result = run_worker(_request(tmp_path), Gate(runtime))
-    assert result.status == "settled_success"
+    assert result.status == "settled_success", result.error
     assert result.disposition.status == "settled"
     assert len(result.observations) == 2 * len(REQUIRED_GROUPS)
     assert runtime.trace[0] == "service_identity"
     assert runtime.trace[-1] == "release"
+
+
+def test_worker_waits_for_cached_source_sample_to_advance(tmp_path):
+    runtime = Runtime()
+    read_counts = {"left_gripper": 0}
+    original_read_state = runtime.read_state
+
+    def cached_read_state(group):
+        payload = original_read_state(group)
+        if group != "left_gripper":
+            return payload
+        read_counts[group] += 1
+        if read_counts[group] < 3:
+            payload["sequence"] = 41
+        else:
+            payload["sequence"] = 42
+        return payload
+
+    runtime.read_state = cached_read_state
+
+    result = run_worker(_request(tmp_path), Gate(runtime))
+
+    assert result.status == "settled_success", result.error
+    assert read_counts["left_gripper"] == 3
+    gripper_samples = [
+        item for item in result.observations if item.group == "left_gripper"
+    ]
+    assert [item.source_sequence for item in gripper_samples] == [41, 42]
+
+
+def test_worker_rejects_repeated_cache_reads_as_required_observations(
+    tmp_path, monkeypatch
+):
+    import robots.lynsense_real_box.commissioning_worker as worker_module
+
+    runtime = Runtime()
+    original_read_state = runtime.read_state
+
+    def cached_read_state(group):
+        payload = original_read_state(group)
+        payload["sequence"] = 41
+        return payload
+
+    runtime.read_state = cached_read_state
+    request = _request(tmp_path)
+    clock = {"value": request.initialization_deadline_monotonic - 1.0}
+    sleeps = []
+    monkeypatch.setattr(
+        worker_module.time,
+        "monotonic",
+        lambda: clock.__setitem__("value", clock["value"] + 0.01) or clock["value"],
+    )
+    monkeypatch.setattr(
+        worker_module.time,
+        "sleep",
+        lambda value: sleeps.append(value),
+    )
+
+    result = worker_module.run_worker(request, Gate(runtime))
+
+    assert result.status == "known_failure", result.error
+    assert "observation deadline expired" in result.error
+    assert result.disposition.status == "unknown"
+    assert result.disposition.reason == "initialization_or_observation_failed"
+    assert sleeps
+    assert "release" not in runtime.trace
+
+
+def test_worker_rejects_device_sequence_regression(tmp_path):
+    runtime = Runtime()
+    reads = {"left_arm": 0}
+    original_read_state = runtime.read_state
+
+    def read_state(group):
+        payload = original_read_state(group)
+        if group == "left_arm":
+            reads[group] += 1
+            if reads[group] == 1:
+                payload["sequence"] = 10
+            elif reads[group] == 2:
+                payload["sequence"] = 9
+        return payload
+
+    runtime.read_state = read_state
+
+    result = run_worker(_request(tmp_path), Gate(runtime))
+
+    assert result.status == "known_failure"
+    assert "provenance changed" in result.error
+    assert result.disposition.status == "unknown"
+    assert "release" not in runtime.trace
+
+
+def test_worker_rejects_provenance_change_within_a_group(tmp_path):
+    runtime = Runtime()
+    reads = {"left_arm": 0}
+    original_read_state = runtime.read_state
+
+    def read_state(group):
+        payload = original_read_state(group)
+        if group == "left_arm":
+            reads[group] += 1
+            if reads[group] == 1:
+                payload["sequence"] = 10
+            elif reads[group] == 2:
+                payload["sequence"] = None
+                payload["timestamp"] = "1970-01-01T00:00:01+00:00"
+                payload["provenance"] = "device_timestamp"
+        return payload
+
+    runtime.read_state = read_state
+
+    result = run_worker(_request(tmp_path), Gate(runtime))
+
+    assert result.status == "known_failure"
+    assert "provenance changed" in result.error
+    assert result.disposition.status == "unknown"
+    assert "release" not in runtime.trace
+
+
+def test_worker_rechecks_deadline_after_a_blocking_read_returns(
+    tmp_path, monkeypatch
+):
+    import robots.lynsense_real_box.commissioning_worker as worker_module
+
+    runtime = Runtime()
+    reads = {"left_arm": 0}
+    original_read_state = runtime.read_state
+    request = _request(tmp_path)
+    clock = {"value": request.initialization_deadline_monotonic - 0.1}
+
+    def read_state(group):
+        payload = original_read_state(group)
+        if group == "left_arm":
+            reads[group] += 1
+            if reads[group] == 2:
+                clock["value"] = request.deadline_monotonic + 1.0
+        return payload
+
+    runtime.read_state = read_state
+    monkeypatch.setattr(worker_module.time, "monotonic", lambda: clock["value"])
+    monkeypatch.setattr(worker_module.time, "sleep", lambda value: None)
+
+    result = worker_module.run_worker(request, Gate(runtime))
+
+    assert result.status == "known_failure"
+    assert result.error == "TimeoutError: observation deadline expired"
+    assert result.disposition.status == "unknown"
+    assert result.disposition.reason == "initialization_or_observation_failed"
+    assert reads["left_arm"] == 2
+    assert "release" not in runtime.trace
 
 
 def test_worker_default_gate_fails_closed_without_importing_driver(

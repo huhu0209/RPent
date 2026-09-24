@@ -320,6 +320,101 @@ def request_from_dict(data: dict[str, Any]) -> InitializationWorkerRequest:
     return request
 
 
+def _observation_progress(
+    observation: StateEvidence,
+    progress_basis: str,
+) -> float | datetime:
+    """Return the evidence value that must advance between observations."""
+
+    if observation.sample_provenance == "device_timestamp":
+        stamp = observation.source_timestamp
+        if stamp is None:
+            raise ValueError("device timestamp observation has no timestamp")
+        return stamp
+    if observation.sample_provenance == "device_sequence":
+        sequence = observation.source_sequence
+        if sequence is None:
+            raise ValueError("device sequence observation has no sequence")
+        return sequence
+    if observation.sample_provenance == "request_response_acquisition":
+        if progress_basis == "adapter_sequence":
+            if observation.adapter_sequence is None:
+                raise ValueError(
+                    "request-response observation lost its adapter sequence"
+                )
+            return observation.adapter_sequence
+        if observation.adapter_sequence is not None:
+            raise ValueError(
+                "request-response observation introduced an adapter sequence"
+            )
+        return observation.receipt_monotonic
+    raise ValueError("unknown sample provenance")
+
+
+def _progress_basis(observation: StateEvidence) -> str:
+    if observation.sample_provenance == "request_response_acquisition":
+        return (
+            "adapter_sequence"
+            if observation.adapter_sequence is not None
+            else "receipt_monotonic"
+        )
+    return observation.sample_provenance
+
+
+def _collect_distinct_observations(
+    runtime: Any,
+    group: str,
+    required_samples: int,
+    deadline_monotonic: float,
+    normalize_state: Any,
+) -> list[StateEvidence]:
+    """Collect distinct source observations without treating cache rereads as new."""
+
+    accepted: list[StateEvidence] = []
+    progress_basis: str | None = None
+    while len(accepted) < required_samples:
+        now = time.monotonic()
+        if now >= deadline_monotonic:
+            raise TimeoutError("observation deadline expired")
+
+        observation = normalize_state(group, runtime.read_state(group))
+        if time.monotonic() >= deadline_monotonic:
+            raise TimeoutError("observation deadline expired")
+        if not accepted:
+            progress_basis = _progress_basis(observation)
+            _observation_progress(observation, progress_basis)
+            accepted.append(observation)
+            continue
+
+        assert progress_basis is not None
+        current_basis = _progress_basis(observation)
+        previous_progress = _observation_progress(
+            accepted[-1],
+            progress_basis,
+        )
+        current_progress = _observation_progress(observation, current_basis)
+        if (
+            current_basis != progress_basis
+            or observation.sample_provenance != accepted[-1].sample_provenance
+            or current_progress < previous_progress
+        ):
+            raise ValueError(
+                f"fixed observation provenance changed for {group}: "
+                f"{previous_progress!r} -> {current_progress!r}"
+            )
+        if current_progress > previous_progress:
+            accepted.append(observation)
+            continue
+
+        remaining_s = deadline_monotonic - time.monotonic()
+        if remaining_s <= 0:
+            raise TimeoutError("observation deadline expired")
+        time.sleep(min(0.02, remaining_s))
+    if time.monotonic() >= deadline_monotonic:
+        raise TimeoutError("observation deadline expired")
+    return accepted
+
+
 def run_worker(request: InitializationWorkerRequest, gate: Any = None) -> InitializationWorkerResult:
     """Initialize once through the supplied guarded boundary and collect fixed reads."""
     from .commissioning_binding import _normalize_state
@@ -385,12 +480,17 @@ def run_worker(request: InitializationWorkerRequest, gate: Any = None) -> Initia
                     operator_verified = runtime.operator_verification()
                     identity = replace(identity, operator_verified=operator_verified)
                     for group in request.required_groups:
-                        for _ in range(request.required_samples):
-                            if time.monotonic() >= request.deadline_monotonic:
-                                raise TimeoutError("observation deadline expired")
-                            observations.append(
-                                _normalize_state(group, runtime.read_state(group))
+                        observations.extend(
+                            _collect_distinct_observations(
+                                runtime,
+                                group,
+                                request.required_samples,
+                                request.deadline_monotonic,
+                                _normalize_state,
                             )
+                        )
+                    if time.monotonic() >= request.deadline_monotonic:
+                        raise TimeoutError("observation deadline expired")
                     service = runtime.service_identity()
                     if service != service_before:
                         raise RuntimeError("service identity or epoch changed during observation")
@@ -399,6 +499,8 @@ def run_worker(request: InitializationWorkerRequest, gate: Any = None) -> Initia
                     if service_after_resources != service:
                         raise RuntimeError("service identity or epoch changed during resource inventory")
                     service = service_after_resources
+                    if time.monotonic() >= request.deadline_monotonic:
+                        raise TimeoutError("observation deadline expired")
                     try:
                         runtime.release()
                     except Exception as release_exc:

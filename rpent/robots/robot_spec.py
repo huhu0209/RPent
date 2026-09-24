@@ -67,6 +67,9 @@ class RobotSpec:
     #: Physical scene restoration requires operator involvement, not simulator reset.
     #: Real-robot runs require an exclusive operator terminal.
     is_real_robot: bool = False
+    #: Whether this real-robot backend may run through Dashboard. Reserved for
+    #: a read-only surface; motion-capable real robots remain terminal-only.
+    supports_dashboard: bool = False
     #: Whether the robot implements the exploration-time toolkit contract.
     #: The CLI uses this instead of hard-coding robot names so real-robot
     #: extensions can opt into exploration with their own reset semantics.

@@ -53,7 +53,11 @@ def run_dashboard_session(
     parser: argparse.ArgumentParser,
 ) -> int:
     """Run one long-lived Dashboard Session with sequential fresh TaskRuns."""
-    if robot_spec.is_real_robot:
+    if robot_spec.is_real_robot and not getattr(
+        robot_spec,
+        "supports_dashboard",
+        False,
+    ):
         parser.error("This robot requires operator confirmation in a plain terminal.")
     from rpent.dashboard.server import DashboardServer
     from rpent.dashboard.session import DashboardSessionController

@@ -16,6 +16,63 @@ disagreements with documentation instead of assuming either is correct.
 - `tests/`: offline tests and integration checks; see [tests/README.md](tests/README.md).
 - `docs/source-en/` and `docs/source-zh/`: paired user and developer documentation.
 
+## Robot One integration boundary
+
+Robot One has three distinct RPent paths. Do not merge their evidence or
+authorization boundaries:
+
+- `robots/lynsense/` is the historical ROS read-only right-arm backend. It is
+  not the current whole-robot integration.
+- `robots/lynsense_real_box/` contains the offline dry-run workflow, guarded
+  atomic-capability contracts, commissioning subprocess, and fail-closed live
+  composition helpers. Its offline tests do not authorize motion.
+- `robots/robot_one_readonly/` is the current registered whole-robot read-only
+  backend. Its exact model surface is `read_robot_state`; it reads both arms,
+  both grippers, waist lift, and both force sensors through an owned
+  LynrotControl runtime, then releases the claim. It has no motion, gripper,
+  chassis, perception, file, image, or finish capability.
+
+`robot_one_readonly` is the only real-robot backend currently allowed to use
+Dashboard through `RobotSpec.supports_dashboard`. Other real-robot backends
+remain ordinary-terminal-only. Dashboard conversation access is not motion
+authorization.
+
+The Robot One host is `zxh@rpp-PC` (`192.168.77.249`), deployed under
+`/home/zxh/zxh/RPent` and `/home/zxh/zxh/lynrotcontrol`. The runtime requires
+`ROS_DOMAIN_ID=3` and the pinned `ea200.yaml` configuration digest. Model
+credentials live in `/home/zxh/.config/rpent/lynsense.env`; never copy its API
+key into source, logs, evidence, tests, or documentation.
+
+Before any Robot One change:
+
+1. Read `TODOS.md` for the current integration state and next gate.
+2. Keep RPent as the strategy/composition layer and LynrotControl as the
+   bounded robot capability layer. Do not import company pytree task flow or
+   use `plan_arm_simple` as the runtime orchestrator.
+3. Treat `stop_all`, Toolkit `close()`, resource cleanup, and a physical
+   E-stop as different operations. None of them is a substitute for a
+   confirmed software stop API required by an actuator capability.
+4. CTAG grippers currently report no supported software cancel. Live gripper
+   dispatch remains blocked until a reviewed stop/cancel interface exists.
+5. Live motion requires a site-confirmed v2 atomic profile plus separate
+   operator authorization naming the exact component, profile, and stop
+   condition. Passing state reads or Dashboard conversation grants none of
+   these.
+
+For changes to `robot_one_readonly`, run at minimum:
+
+```sh
+pytest -q \
+  tests/unit_tests/robots/robot_one_readonly \
+  tests/unit_tests/rpent/robots/test_registry_contracts.py \
+  tests/unit_tests/rpent/cli/test_main_contracts.py \
+  tests/unit_tests/rpent/dashboard/test_state_contracts.py
+```
+
+Real-host checks are separate from these offline tests and must record the
+host, `ROS_DOMAIN_ID`, service identity, state groups, release result, and
+final claim disposition.
+
 ## Development principles
 
 - Confirm the working branch and relevant upstream state before editing. Read

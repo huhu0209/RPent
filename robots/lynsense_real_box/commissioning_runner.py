@@ -321,7 +321,25 @@ class CommissioningRunner:
                 return False
             provenance = samples[0].sample_provenance
             if provenance == "request_response_acquisition":
-                distinct = len({item.receipt_monotonic for item in samples}) == len(samples)
+                adapter_sequences = [item.adapter_sequence for item in samples]
+                if all(value is not None for value in adapter_sequences):
+                    distinct = (
+                        len(set(adapter_sequences)) == len(samples)
+                        and all(
+                            right > left
+                            for left, right in zip(
+                                adapter_sequences,
+                                adapter_sequences[1:],
+                            )
+                        )
+                    )
+                elif all(value is None for value in adapter_sequences):
+                    distinct = (
+                        len({item.receipt_monotonic for item in samples})
+                        == len(samples)
+                    )
+                else:
+                    distinct = False
             elif provenance == "device_sequence":
                 values = [item.source_sequence for item in samples]
                 distinct = (

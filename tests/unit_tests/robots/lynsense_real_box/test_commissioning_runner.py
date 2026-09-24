@@ -242,3 +242,42 @@ def test_runner_rejects_non_advancing_device_sequences(tmp_path, valid_manifest,
     assert not outcome.required_state_groups_observed
     assert read_lock_record(valid_manifest.lock_path).state == "unknown"
     evidence.close()
+
+
+def test_runner_rejects_mixed_request_response_progress_bases(
+    tmp_path, valid_manifest, valid_authority
+):
+    authority, host, authorization = valid_authority
+
+    class MixedBasisSupervisor:
+        def run_worker(self, request):
+            result = _successful_result(
+                valid_manifest, request.attempt_id, request.deadline_monotonic
+            )
+            first, second = result.observations[:2]
+            mixed = (
+                replace(
+                    first,
+                    sample_provenance="request_response_acquisition",
+                    source_sequence=None,
+                    adapter_sequence=1,
+                ),
+                replace(
+                    second,
+                    sample_provenance="request_response_acquisition",
+                    source_sequence=None,
+                    adapter_sequence=None,
+                ),
+            )
+            return replace(result, observations=mixed + result.observations[2:])
+
+    runner, policy, evidence = _runner(
+        tmp_path, valid_manifest, MixedBasisSupervisor(), authorization
+    )
+
+    outcome = runner.run_once(valid_manifest, host, authority, authorization, policy)
+
+    assert outcome.status == "failed"
+    assert not outcome.required_state_groups_observed
+    assert read_lock_record(valid_manifest.lock_path).state == "unknown"
+    evidence.close()
