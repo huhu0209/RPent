@@ -5,8 +5,8 @@
 **Operator:** huhu
 **Target host:** zxh@192.168.11.11
 **Deployment root:** `~/zxh/`
-**LynrotControl:** `~/zxh/lynrotcontrol` (`dev_hu`, `46514683f2beb532e007f84a5b13e1794f3ee995`)
-**RPent:** `~/zxh/RPent` (`main`, `0d5077a` full SHA pinned at implementation-plan time)
+**LynrotControl:** `~/zxh/lynrotcontrol` (`dev_hu`, `5e5e6b84ce4280750ea64b6fe34f159ec162cc8f`)
+**RPent:** `~/zxh/RPent` (`main`; exact SHA recorded at deployment verification)
 
 ## Goal
 
@@ -69,14 +69,14 @@ All commands are run via `ssh zxh@192.168.11.11`.
 
 3. LynrotControl process check (exact module match):
    ```bash
-   pgrep -af 'python.*[ ]-m lynrotcontrol[.]lynarmcontrol[.]implementation[.]service' || echo no-service
+   pgrep -af '[p]ython.*-m lynrotcontrol[.]lynarmcontrol[.]implementation[.]service' || echo no-service
    ```
    Pass criteria: output is exactly `no-service`. Any PID match is a
    hard stop.
 
 4. Authority directory state:
    ```bash
-   find /tmp/lynrotcontrol-authority-1000/endpoints -name '*.json' -type f 2>/dev/null | head -5 || echo authority-clean
+   found=$(find /tmp/lynrotcontrol-authority-1000/endpoints/*/claims -name '*.json' -type f 2>/dev/null | head -5); if [ -z "$found" ]; then echo authority-clean; else echo "$found"; fi
    ```
    Interpretation:
    - `authority-clean`: pass
@@ -113,7 +113,7 @@ contact, no ROS initialization.
    ```bash
    cd ~/zxh/lynrotcontrol && git rev-parse HEAD
    ```
-   Expected: `46514683f2beb532e007f84a5b13e1794f3ee995`
+   Expected: `5e5e6b84ce4280750ea64b6fe34f159ec162cc8f`
 4. Verify artifact:
    ```bash
    sha256sum ~/zxh/lynrotcontrol/OWNERSHIP_PROTOCOL.json
@@ -142,7 +142,7 @@ Expected: exactly 127 tests, 0 failures, 0 errors, 0 skipped.
 cd ~/zxh/RPent && python3 -m pytest -q \
   tests/unit_tests/robots/lynsense_real_box/
 ```
-Expected: all pass (no torch dependency in this subset).
+Expected: exactly 469 tests, 0 failures, 0 errors, 0 skipped.
 
 If Python dependencies are missing on target, the deployment report lists
 them and stops. No automatic dependency installation without operator
@@ -159,10 +159,10 @@ this deployment.
 ## Phase 3: First-Connection State Acceptance
 
 **Authorization:** Requires a machine-checkable authorization file that
-passes the existing `commissioning_cli.py` schema, including at minimum:
-operator identity, manifest digest, attempt ID, host enrollment digest,
-policy digest, expiry, Robot One identity, and the exact three-value
-approved-effects tuple. Verbal approval alone is insufficient.
+passes the exact `commissioning_cli.py` schema: operator identity,
+manifest digest, attempt ID, host enrollment digest, policy digest,
+expiry, and Robot One identity. Approved effects belong only in the
+manifest, not in the authorization file. Verbal approval alone is insufficient.
 
 ### Preconditions
 
@@ -230,10 +230,10 @@ All conditions from `commissioning_runner.py` are enforced:
 | State read failure (invalid/missing) | Stop; record; dependency claim state may be active or unknown; report |
 | Read deadline expiry | Stop; retain RPent lock; dependency claim state unknown pending inspection; record `worker_timeout`; report |
 | Worker crash | Retain RPent lock; dependency claim state unknown; record `worker_crashed`; report |
-| Supervisor interruption | Retain locks and claim; record `supervisor_interrupted`; report |
+| Supervisor interruption | Retain RPent lock; dependency claim state unknown; record `supervisor_interrupted`; report |
 | Evidence write failure after contact | Retain claim; record `evidence_write_failed`; report |
 | Late worker result after timeout | Record `late_settled`; do not treat as success; do not auto-release |
-| Release rejection or uncertainty | Record `claim_release_unknown`; retain both locks; report |
+| Release rejection or uncertainty | Record `claim_release_unknown`; retain RPent lock; dependency claim state unknown; report |
 
 None of these outcomes trigger motion, recovery, stop, shutdown, service
 spawn, initialization retry, or automatic claim cleanup. Reconciliation of
@@ -264,7 +264,7 @@ in evidence files.
 | Operation | Phase 1 | Phase 2 | Phase 3 |
 |---|---|---|---|
 | SSH read commands | yes | yes | yes |
-| File write on target | no | yes | no |
+| File write on target | no | yes | bounded (commissioning evidence and lock records only) |
 | git clone/pull | no | yes | no |
 | Offline unit tests | no | yes | no |
 | ROS node/topic list | read-only | no | no |
