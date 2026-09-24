@@ -1,0 +1,6 @@
+string goal_name
+---
+bool success
+string message
+---
+float64 distance_remaining

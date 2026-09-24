@@ -1,0 +1,12 @@
+# Goal
+string target
+bool initok
+---
+# Result
+bool success
+string message
+---
+# Feedback
+string phase
+float64 progress
+float64 max_joint_error_rad

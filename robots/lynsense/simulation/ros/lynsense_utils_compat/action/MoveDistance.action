@@ -1,0 +1,8 @@
+float64 distance
+float64 angle
+---
+bool success
+string message
+---
+float64 distance_remaining
+float64 angle_remaining

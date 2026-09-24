@@ -1,0 +1,11 @@
+# Goal
+float64 height_mm
+---
+# Result
+bool success
+string message
+---
+# Feedback
+string phase
+float64 position_mm
+float64 remaining_mm

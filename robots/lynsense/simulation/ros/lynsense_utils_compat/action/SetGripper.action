@@ -1,0 +1,11 @@
+# Goal
+float64 position
+---
+# Result
+bool success
+string message
+---
+# Feedback
+string phase
+float64 position
+float64 remaining

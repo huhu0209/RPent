@@ -1,0 +1,102 @@
+box:
+  dimensions_m: [0.397, 0.295, 0.217]
+  mass_kg: 1.0
+  initial_pose_frame: world
+  initial_pose_m: [1.674931, -2.493846, 0.1085]
+  initial_yaw_rad: 0.0
+  place_target_frame: world
+  place_target_m: [2.810559, -2.734170, 0.1085]
+  place_target_yaw_rad: 0.006126
+
+waist:
+  motor_name: waist_motor
+  position_sensor_name: waist_sensor
+  lower_m: -0.478
+  upper_m: -0.018
+  max_velocity_mps: 0.0248
+  height_reference_m: -0.478
+  height_positive_up: true
+  arrival_tolerance_m: 0.003
+
+left_arm:
+  joint_names: [left_joint1, left_joint2, left_joint3, left_joint4, left_joint5, left_joint6]
+  max_velocity_radps: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+  max_acceleration_radps2: [2.0, 2.0, 2.0, 2.0, 2.0, 2.0]
+  limits_rad:
+    left_joint1: [-6.28318530718, 6.28318530718]
+    left_joint2: [-2.3038346, 2.3038346]
+    left_joint3: [-4.2236968, 0.061087]
+    left_joint4: [-6.28318530718, 6.28318530718]
+    left_joint5: [-2.1642, 2.1642]
+    left_joint6: [-6.28318530718, 6.28318530718]
+
+right_arm:
+  joint_names: [right_joint1, right_joint2, right_joint3, right_joint4, right_joint5, right_joint6]
+  max_velocity_radps: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+  max_acceleration_radps2: [2.0, 2.0, 2.0, 2.0, 2.0, 2.0]
+  limits_rad:
+    right_joint1: [-6.28318530718, 6.28318530718]
+    right_joint2: [-2.33175986832, 2.27590933197]
+    right_joint3: [-3.44702528286, 0.837758517137]
+    right_joint4: [-6.28318530718, 6.28318530718]
+    right_joint5: [-2.1642, 2.1642]
+    right_joint6: [-6.28318530718, 6.28318530718]
+
+grippers:
+  left:
+    motor_name: left_gripper_motor
+    position_sensor_name: left_gripper_sensor
+    closed_position: 0.0
+    open_position: 0.6
+    arrival_tolerance: 0.05
+    max_velocity: 1.0
+  right:
+    motor_name: right_gripper_motor
+    position_sensor_name: right_gripper_sensor
+    closed_position: 0.0
+    open_position: 0.6
+    arrival_tolerance: 0.05
+    max_velocity: 1.0
+
+named_targets:
+  dualjo:joints_s:
+    waist_height_mm: 200.0
+    gripper_position: 0.0
+    left_joints_rad: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    right_joints_rad: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+  dualjo:joints_br:
+    waist_height_mm: 200.0
+    gripper_position: 0.0
+    left_joints_rad: [1.589995, -1.120501, -2.979277, -1.382301, -0.141372, 1.32645]
+    right_joints_rad: [-1.589995, -1.120501, -2.979277, -1.382301, -0.141372, 1.32645]
+  dualposi_armbase_abso:pt_1f1_ready:
+    waist_height_mm: 200.0
+    gripper_position: 0.0
+    left_joints_rad: [1.589995, -1.295034, -2.979277, -1.382301, -0.141372, 1.32645]
+    right_joints_rad: [-1.589995, -1.295034, -2.979277, -1.382301, -0.141372, 1.32645]
+  dualposi_armbase_abso:pt_up:
+    waist_height_mm: 200.0
+    gripper_position: 0.0
+    left_joints_rad: [-0.458970, 0.050475, -0.521966, -0.202441, 0.193761, 0.076757]
+    right_joints_rad: [0.458970, 0.050475, -0.521966, -0.202441, 0.193761, 0.076757]
+
+thresholds:
+  joint_arrival_rad: 0.03
+  waist_arrival_m: 0.003
+  gripper_arrival: 0.05
+  grasp_alignment_m: 0.03
+  grasp_yaw_rad: 0.174533
+  carry_drift_m: 0.02
+  place_alignment_m: 0.05
+  place_yaw_rad: 0.174533
+  release_roll_pitch_rad: 0.087266
+  release_settle_s: 0.5
+
+timeouts:
+  waist_s: 30.0
+  named_config_s: 60.0
+  gripper_s: 15.0
+  box_phase_s: 45.0
+  stall_window_s: 1.0
+  joint_stall_threshold_rad: 0.003
+  total_budget_s: 180.0
