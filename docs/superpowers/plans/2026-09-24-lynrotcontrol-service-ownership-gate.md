@@ -21,7 +21,7 @@
 
 ```json
 {
-  "endpoint_authority_root": "/tmp/lynrotcontrol-authority-1000",
+  "endpoint_authority_root": "/tmp/lynrotcontrol-authority-1008",
   "protocol_id": "lynrotcontrol.service-ownership",
   "protocol_version": 1,
   "read_allowlist_sha256": "38015e139b4b7ae2c0ca7f2261be2a90cb4d40ee12d35420875c6d150962ceee",
@@ -29,7 +29,7 @@
 }
 ```
 
-- The SHA-256 of those exact artifact bytes, including the final newline, is `78c45f6796cd90fdf63f51ac407ac261c04e42ab454bb6d0897749d81904c84a`.
+- The SHA-256 of those exact artifact bytes, including the final newline, is `53a6ea5b7787ae2926f2ee951cd2de630c1af7b03e2bf4bca8cc622729225062`.
 - Bump the runtime socket protocol from `14` to `15`; never fall back to protocol `14`.
 - The endpoint authority root selected above is tied to the verified local UID `1000`. Deployment to a Robot One account with another UID must fail closed and require a new artifact, digest, manifest, review, and approval.
 - Canonical JSON means sorted keys, `(',', ':')` separators, UTF-8 bytes, no trailing newline, and ASCII-only endpoint/scope identifiers.
@@ -95,7 +95,7 @@ class ServiceOwnershipProtocolTests(unittest.TestCase):
         artifact = Path(ownership.__file__).parents[2] / "OWNERSHIP_PROTOCOL.json"
         metadata = ownership.load_protocol_artifact(artifact)
         self.assertEqual(metadata, {
-            "endpoint_authority_root": "/tmp/lynrotcontrol-authority-1000",
+            "endpoint_authority_root": "/tmp/lynrotcontrol-authority-1008",
             "protocol_id": "lynrotcontrol.service-ownership",
             "protocol_version": 1,
             "read_allowlist_sha256": ownership.READ_ALLOWLIST_SHA256,
@@ -103,7 +103,7 @@ class ServiceOwnershipProtocolTests(unittest.TestCase):
         })
         self.assertEqual(
             hashlib.sha256(artifact.read_bytes()).hexdigest(),
-            "78c45f6796cd90fdf63f51ac407ac261c04e42ab454bb6d0897749d81904c84a",
+            "53a6ea5b7787ae2926f2ee951cd2de630c1af7b03e2bf4bca8cc622729225062",
         )
 
     def test_bad_artifact_is_rejected(self):
@@ -209,7 +209,7 @@ def load_protocol_artifact(path: Path) -> dict[str, object]:
     except (OSError, json.JSONDecodeError) as exc:
         raise ValueError(f"cannot read ownership protocol artifact: {exc}") from exc
     expected = {
-        "endpoint_authority_root": "/tmp/lynrotcontrol-authority-1000",
+        "endpoint_authority_root": "/tmp/lynrotcontrol-authority-1008",
         "protocol_id": PROTOCOL_ID,
         "protocol_version": PROTOCOL_VERSION,
         "read_allowlist_sha256": READ_ALLOWLIST_SHA256,

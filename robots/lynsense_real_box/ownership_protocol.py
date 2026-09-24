@@ -13,9 +13,9 @@ READ_ALLOWLIST_SHA256 = (
     "38015e139b4b7ae2c0ca7f2261be2a90cb4d40ee12d35420875c6d150962ceee"
 )
 ARTIFACT_SHA256 = (
-    "78c45f6796cd90fdf63f51ac407ac261c04e42ab454bb6d0897749d81904c84a"
+    "53a6ea5b7787ae2926f2ee951cd2de630c1af7b03e2bf4bca8cc622729225062"
 )
-AUTHORITY_ROOT = Path("/tmp/lynrotcontrol-authority-1000")
+AUTHORITY_ROOT = Path("/tmp/lynrotcontrol-authority-1008")
 _ARTIFACT_KEYS = {
     "endpoint_authority_root",
     "protocol_id",

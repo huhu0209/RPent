@@ -45,7 +45,7 @@ def valid_manifest_data(tmp_path: Path):
         config.write_text("site: offline-fixture\n", encoding="utf-8")
         protocol.write_text(
             '{\n'
-            '  "endpoint_authority_root": "/tmp/lynrotcontrol-authority-1000",\n'
+            '  "endpoint_authority_root": "/tmp/lynrotcontrol-authority-1008",\n'
             '  "protocol_id": "lynrotcontrol.service-ownership",\n'
             '  "protocol_version": 1,\n'
             '  "read_allowlist_sha256": "38015e139b4b7ae2c0ca7f2261be2a90cb4d40ee12d35420875c6d150962ceee",\n'
@@ -83,7 +83,7 @@ def valid_manifest_data(tmp_path: Path):
             "ownership_protocol_id": "lynrotcontrol.service-ownership",
             "ownership_protocol_version": 1,
             "ownership_read_allowlist_sha256": "38015e139b4b7ae2c0ca7f2261be2a90cb4d40ee12d35420875c6d150962ceee",
-            "endpoint_authority_root": "/tmp/lynrotcontrol-authority-1000",
+            "endpoint_authority_root": "/tmp/lynrotcontrol-authority-1008",
             "ownership_runtime_protocol": 15,
             "config_sha256": {str(config): hashlib.sha256(config.read_bytes()).hexdigest()},
             "required_samples": 2, "budgets": {"initialize": 30.0, "read": 5.0},

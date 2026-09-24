@@ -128,9 +128,9 @@ contacts the robot.
 The worker now binds `build_effectful_gate` to a pre-import ownership-protocol
 artifact. Protocol v1 pins
 `lynrotcontrol.service-ownership`, version `1`, runtime protocol `15`,
-authority root `/tmp/lynrotcontrol-authority-1000`, read-allowlist SHA-256
+authority root `/tmp/lynrotcontrol-authority-1008`, read-allowlist SHA-256
 `38015e139b4b7ae2c0ca7f2261be2a90cb4d40ee12d35420875c6d150962ceee`, and artifact
-SHA-256 `78c45f6796cd90fdf63f51ac407ac261c04e42ab454bb6d0897749d81904c84a`.
+SHA-256 `53a6ea5b7787ae2926f2ee951cd2de630c1af7b03e2bf4bca8cc622729225062`.
 The approved effects are initialization/configuration, creation of the fixed
 read-only ROS resources, and fixed read-only ROS parameter queries. The worker
 calls dependency release only after identity, required reads, service identity,

@@ -5,7 +5,7 @@
 **Operator:** huhu
 **Target host:** zxh@192.168.11.11
 **Deployment root:** `~/zxh/`
-**LynrotControl:** `~/zxh/lynrotcontrol` (`dev_hu`, `fc1c48944bdf13c869756891c65ce0134282d516`)
+**LynrotControl:** `~/zxh/lynrotcontrol` (`dev_hu`, `16e267af60f9bc6cd29bf3e463033ebc92440eb5`)
 **RPent:** `~/zxh/RPent` (`main`; exact SHA pinned in the implementation plan's deployment manifest and verified as a Phase 2 exit gate)
 
 ## Goal
@@ -76,7 +76,7 @@ All commands are run via `ssh zxh@192.168.11.11`.
 
 4. Authority directory state:
    ```bash
-   if [ ! -d /tmp/lynrotcontrol-authority-1000/endpoints ]; then echo authority-clean; else find /tmp/lynrotcontrol-authority-1000/endpoints/*/claims -type f -print 2>&1; fi
+   if [ ! -d /tmp/lynrotcontrol-authority-1008/endpoints ]; then echo authority-clean; else find /tmp/lynrotcontrol-authority-1008/endpoints/*/claims -type f -print 2>&1; fi
    ```
    Interpretation:
    - `authority-clean`: pass
@@ -113,12 +113,12 @@ contact, no ROS initialization.
    ```bash
    cd ~/zxh/lynrotcontrol && git rev-parse HEAD
    ```
-   Expected: `fc1c48944bdf13c869756891c65ce0134282d516`
+   Expected: `16e267af60f9bc6cd29bf3e463033ebc92440eb5`
 4. Verify artifact:
    ```bash
    sha256sum ~/zxh/lynrotcontrol/OWNERSHIP_PROTOCOL.json
    ```
-   Expected: `78c45f6796cd90fdf63f51ac407ac261c04e42ab454bb6d0897749d81904c84a`
+   Expected: `53a6ea5b7787ae2926f2ee951cd2de630c1af7b03e2bf4bca8cc622729225062`
 
 ### 2B: Deploy RPent main
 

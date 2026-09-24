@@ -25,7 +25,7 @@ from robots.lynsense_real_box.ownership_protocol import load_ownership_protocol
 
 ARTIFACT_BYTES = (
     '{\n'
-    '  "endpoint_authority_root": "/tmp/lynrotcontrol-authority-1000",\n'
+    '  "endpoint_authority_root": "/tmp/lynrotcontrol-authority-1008",\n'
     '  "protocol_id": "lynrotcontrol.service-ownership",\n'
     '  "protocol_version": 1,\n'
     '  "read_allowlist_sha256": "38015e139b4b7ae2c0ca7f2261be2a90cb4d40ee12d35420875c6d150962ceee",\n'
@@ -129,10 +129,10 @@ def test_ownership_protocol_artifact_has_exact_schema_and_digest(tmp_path):
     path.write_text(ARTIFACT_BYTES, encoding="utf-8")
     protocol = load_ownership_protocol(path)
     assert protocol.artifact_sha256 == (
-        "78c45f6796cd90fdf63f51ac407ac261c04e42ab454bb6d0897749d81904c84a"
+        "53a6ea5b7787ae2926f2ee951cd2de630c1af7b03e2bf4bca8cc622729225062"
     )
     assert protocol.endpoint_authority_root.as_posix() == (
-        "/tmp/lynrotcontrol-authority-1000"
+        "/tmp/lynrotcontrol-authority-1008"
     )
     assert protocol.runtime_protocol == 15
 
@@ -198,7 +198,7 @@ def test_endpoint_digest_uses_exact_sorted_endpoint_objects(valid_manifest):
 
 def test_manifest_pins_exact_ownership_protocol_fields(valid_manifest, valid_manifest_data):
     assert valid_manifest.ownership_protocol_sha256 == (
-        "78c45f6796cd90fdf63f51ac407ac261c04e42ab454bb6d0897749d81904c84a"
+        "53a6ea5b7787ae2926f2ee951cd2de630c1af7b03e2bf4bca8cc622729225062"
     )
     assert valid_manifest.ownership_protocol_artifact.name == "OWNERSHIP_PROTOCOL.json"
     assert valid_manifest.ownership_protocol_id == "lynrotcontrol.service-ownership"

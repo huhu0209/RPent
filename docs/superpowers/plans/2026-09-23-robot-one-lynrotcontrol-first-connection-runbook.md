@@ -34,9 +34,9 @@ The ownership protocol is pinned before dependency import. Protocol v1 requires
 the dependency artifact
 `/home/huhu/work/RPent_lynsense/lynrotcontrol/OWNERSHIP_PROTOCOL.json` (or the
 equivalent reviewed deployment path), artifact SHA-256
-`78c45f6796cd90fdf63f51ac407ac261c04e42ab454bb6d0897749d81904c84a`, protocol ID
+`53a6ea5b7787ae2926f2ee951cd2de630c1af7b03e2bf4bca8cc622729225062`, protocol ID
 `lynrotcontrol.service-ownership`, protocol version `1`, runtime protocol `15`,
-authority root `/tmp/lynrotcontrol-authority-1000`, and read-allowlist SHA-256
+authority root `/tmp/lynrotcontrol-authority-1008`, and read-allowlist SHA-256
 `38015e139b4b7ae2c0ca7f2261be2a90cb4d40ee12d35420875c6d150962ceee`. A manifest
 that names a different value, a symlink, or an absent artifact is rejected.
 
