@@ -5,7 +5,7 @@
 **Operator:** huhu
 **Target host:** zxh@192.168.11.11
 **Deployment root:** `~/zxh/`
-**LynrotControl:** `~/zxh/lynrotcontrol` (`dev_hu`, `2fea14e37b2beab796499ed3ea78578985546b2b`)
+**LynrotControl:** `~/zxh/lynrotcontrol` (`dev_hu`, `fc1c48944bdf13c869756891c65ce0134282d516`)
 **RPent:** `~/zxh/RPent` (`main`; exact SHA pinned in the implementation plan's deployment manifest and verified as a Phase 2 exit gate)
 
 ## Goal
@@ -76,7 +76,7 @@ All commands are run via `ssh zxh@192.168.11.11`.
 
 4. Authority directory state:
    ```bash
-   found=$(find /tmp/lynrotcontrol-authority-1000/endpoints/*/claims -type f 2>&1); if echo "$found" | grep -q "No such"; then echo authority-clean; elif [ -z "$found" ]; then echo authority-clean; else echo "$found"; fi
+   if [ ! -d /tmp/lynrotcontrol-authority-1000/endpoints ]; then echo authority-clean; else find /tmp/lynrotcontrol-authority-1000/endpoints/*/claims -type f -print 2>&1; fi
    ```
    Interpretation:
    - `authority-clean`: pass
@@ -113,7 +113,7 @@ contact, no ROS initialization.
    ```bash
    cd ~/zxh/lynrotcontrol && git rev-parse HEAD
    ```
-   Expected: `2fea14e37b2beab796499ed3ea78578985546b2b`
+   Expected: `fc1c48944bdf13c869756891c65ce0134282d516`
 4. Verify artifact:
    ```bash
    sha256sum ~/zxh/lynrotcontrol/OWNERSHIP_PROTOCOL.json
@@ -127,7 +127,9 @@ contact, no ROS initialization.
    git clone -b main https://github.com/huhu0209/RPent.git ~/zxh/RPent
    ```
 2. If it exists, same clean/dirty/divergence checks as 2A step 2.
-3. Record the deployed commit SHA.
+3. Record the deployed commit SHA and compare it byte-for-byte with the
+   expected SHA from the implementation-plan deployment manifest. Any
+   mismatch is a Phase 2 failure.
 4. Verify `robots/lynsense_real_box/` and the commissioning CLI exist.
 
 ### 2C: Offline Test Gate On Target
@@ -231,10 +233,10 @@ All conditions from `commissioning_runner.py` are enforced:
    (model, IP, side, positive-integer axes). Operator verification equals
    the manifest exactly.
 7. Operator verification fields are present and copied from the manifest.
-8. Expected owned ROS resources match the manifest.
+8. Expected owned resources match the manifest. The dependency currently reports endpoint-ID-derived labels plus robot metadata labels; verified ROS topic/service/parameter evidence is a follow-up gap documented here rather than silently claimed.
 9. Service identity (PID, start_id, epoch) is stable across the run and
    checked at least twice.
-10. Claim transitions: unclaimed -> claim_active -> claim_released.
+10. Claim transitions: unclaimed -> claim_active -> claim_released. The current runner does not emit an explicit transition trace; the operator reviews the durable claim record and receipt claim_state after the run.
 11. Release completes within its timeout; any release uncertainty keeps
     disposition `unknown` with reason `claim_release_unknown`.
 
@@ -243,13 +245,13 @@ All conditions from `commissioning_runner.py` are enforced:
 | Outcome | Action |
 |---|---|
 | Endpoint authority conflict | Stop before spawn; record disposition; report |
-| Durable claim write failure after activation | Stop; service may be live with no durable claim; record `claim_write_failed`; no automatic cleanup; operator must inspect service and authority state before any retry |
+| Durable claim write failure after activation | Stop; service may be live with no durable claim; current dependency exception maps to `known_failure` in the worker; operator must inspect service and authority state before any retry |
 | Bootstrap handshake failure | Stop; claim may be orphaned; record; report |
 | Device initialization failure | Stop; retain claim; record; report |
 | State read failure (invalid/missing) | Stop; record; dependency claim state may be active or unknown; report |
 | Read deadline expiry | Stop; retain RPent lock; dependency claim state unknown pending inspection; record `worker_timeout`; report |
 | Worker crash | Retain RPent lock; dependency claim state unknown; record `worker_crashed`; report |
-| Supervisor interruption | Retain RPent lock; dependency claim state unknown; record `supervisor_interrupted`; report |
+| Supervisor interruption | Retain RPent lock; dependency claim state unknown; current runner records via KeyboardInterrupt path without a distinct `supervisor_interrupted` code; report from lock/evidence inspection |
 | Evidence write failure after contact | Retain claim; record `evidence_write_failed`; report |
 | Late worker result after timeout | Record `late_settled`; do not treat as success; do not auto-release |
 | Release rejection or uncertainty | Record `claim_release_unknown`; retain RPent lock; dependency claim state unknown; report |
@@ -275,6 +277,7 @@ After Phase 3, the following are copied to the local development machine:
 
 ```bash
 scp zxh@<target>:~/zxh/RPent/commissioning-artifacts/<attempt-id>/*.json \
+    zxh@<target>:~/zxh/RPent/commissioning-artifacts/<attempt-id>/*.jsonl \
     /home/huhu/work/RPent_lynsense/RPent/commissioning-artifacts/<attempt-id>/
 ```
 
