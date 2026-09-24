@@ -1,0 +1,18 @@
+<py_trees.composites.Sequence name="SingleBoxSerialTask" memory="True">
+  <EnsureSimulationManipulationServices name="EnsureSimulationServices" />
+  <SimulationNavToPose goal_name="搬箱子1" name="NavigateToBox1" />
+  <SimulationPlanMoveWaist height_mm="200" name="PrepareWaist" />
+  <SimulationPlanSetGripper position="0.0" name="CloseGrippersForPrepare" />
+  <SimulationPlanMoveNamedConfig target="dualjo:joints_br" name="PrepareDualArms" />
+  <SimulationPlanBoxPhase action="pick" flow="flow" config="box1" name="PickBox1" />
+  <SimulationMoveDistance distance="-0.6" angle="0" name="BackOffFromBox1" />
+  <SimulationMoveDistance distance="0.0" angle="90" name="TurnAfterBox1" />
+  <SimulationPlanMoveNamedConfig target="dualposi_armbase_abso:pt_1f1_ready" name="PreparePlacement" />
+  <SimulationNavToPose goal_name="放箱子1_1" name="NavigateToBox1Drop" />
+  <SimulationPlanBoxPhase action="place" flow="flow" config="box1" name="PlaceBox1" />
+  <SimulationMoveDistance distance="-0.6" angle="0" name="RetreatAfterPlacement" />
+  <SimulationPlanMoveNamedConfig target="dualposi_armbase_abso:pt_up" name="RaiseArmsAfterPlacement" />
+  <SimulationPlanMoveWaist height_mm="200" name="RestoreWaist" />
+  <SimulationPlanSetGripper position="0.0" name="RestoreGrippers" />
+  <SimulationPlanMoveNamedConfig target="dualjo:joints_s" name="RestoreTravelPosture" />
+</py_trees.composites.Sequence>

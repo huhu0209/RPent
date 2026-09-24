@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lynsense Dual Camera Viewer</title>
+    <link rel="stylesheet" href="/static/app.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">Lynsense simulation</p>
+          <h1>Dual camera viewer</h1>
+        </div>
+        <div class="status-block">
+          <span class="status-label">Run state</span>
+          <strong id="run-state">starting</strong>
+          <span id="run-id">Waiting for run</span>
+        </div>
+      </header>
+
+      <section class="video-panel" aria-labelledby="video-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Capture</p>
+            <h2 id="video-heading">Simulation video</h2>
+          </div>
+          <div class="video-actions">
+            <div class="view-selector" role="group" aria-label="Camera view">
+              <button id="view-scene" class="segment-button is-active" type="button" data-view="scene" aria-pressed="true">Scene</button>
+              <button id="view-robot" class="segment-button" type="button" data-view="robot" aria-pressed="false">Robot view</button>
+            </div>
+            <a id="replay-link" class="action-link" href="/replay/scene.mp4" hidden>Open scene replay</a>
+          </div>
+        </div>
+        <video id="video" controls muted playsinline preload="metadata" aria-label="Delayed simulation video"></video>
+        <p id="video-error" class="error" role="alert" hidden></p>
+      </section>
+
+      <section class="metrics" aria-label="Run telemetry">
+        <div class="metric"><span>Phase</span><strong id="phase">-</strong></div>
+        <div class="metric"><span>Pose</span><strong id="pose">-</strong></div>
+        <div class="metric"><span>Wheel rates</span><strong id="wheel-rates">-</strong></div>
+        <div class="metric"><span>Waist</span><strong id="waist-position">-</strong></div>
+        <div class="metric"><span>Grippers</span><strong id="gripper-positions">-</strong></div>
+        <div class="metric"><span>Arm error</span><strong id="arm-error">-</strong></div>
+        <div class="metric"><span>Box</span><strong id="box-pose">-</strong></div>
+        <div class="metric"><span>Box state</span><strong id="box-state">-</strong></div>
+        <div class="metric"><span>Active action</span><strong id="active-action">-</strong></div>
+        <div class="metric"><span>Reason</span><strong id="run-reason">-</strong></div>
+      </section>
+
+      <section class="workbench">
+        <div class="map-panel">
+          <div class="section-heading compact">
+            <div><p class="eyebrow">Spatial trace</p><h2>Trajectory</h2></div>
+            <span id="simulation-time" class="muted">Simulation time -</span>
+          </div>
+          <canvas id="map" width="900" height="560" aria-label="Robot trajectory map"></canvas>
+        </div>
+        <div class="timeline-panel">
+          <div class="section-heading compact"><div><p class="eyebrow">Event evidence</p><h2>Action timeline</h2></div></div>
+          <ol id="action-timeline" class="timeline"></ol>
+        </div>
+      </section>
+
+      <section id="terminal-summary" class="terminal" hidden>
+        <div><p class="eyebrow">Terminal evidence</p><h2>Run summary</h2></div>
+        <p id="terminal-text">-</p>
+      </section>
+    </main>
+    <script src="/static/vendor/hls.min.js"></script>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+<!-- Navigation-only excerpt from WHRG2026 lynsense_plan_move2box_tree.xml. -->
+<py_trees.composites.Sequence name="MatchMinimalNavigation" memory="True">
+    <behaviours.navigation.nav_to_pose.NavToPose goal_name="搬箱子1" name="NavToPoseToBox1" />
+    <behaviours.navigation.move_distance.MoveDistance distance="-0.6" angle="0" name="BackOffFromBox1" />
+    <behaviours.navigation.move_distance.MoveDistance distance="0.0" angle="90" name="TurnAfterBox1" />
+    <behaviours.navigation.nav_to_pose.NavToPose goal_name="放箱子1_1" name="NavToPoseToBox1Drop" />
+</py_trees.composites.Sequence>

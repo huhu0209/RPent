@@ -1,0 +1,71 @@
+goals:
+  home:
+    x: 0.0
+    y: 0.0
+    yaw_deg: 0.0
+  搬箱子1:
+    x: 2.024931001163208
+    y: -2.4938457012176514
+    yaw_deg: 178.927596408134
+  放箱子1_1:
+    x: 2.460558853149414
+    y: -2.6341702938073354
+    yaw_deg: 0.35089784218538095
+
+motion:
+  max_linear_velocity_mps: 2.0
+  max_angular_velocity_radps: 1.5
+  max_linear_acceleration_mps2: 1.0
+  max_angular_acceleration_radps2: 1.0
+  smoke_linear_velocity_mps: 0.3
+  smoke_angular_velocity_radps: 0.5
+  smoke_linear_acceleration_mps2: 0.5
+  smoke_angular_acceleration_radps2: 1.0
+  position_tolerance_m: 0.05
+  yaw_tolerance_rad: 0.03490658503988659
+  stall_window_s: 1.0
+  yaw_stall_threshold_rad: 0.008726646259971648
+  distance_stall_threshold_m: 0.005
+  total_budget_s: 60.0
+  timeout_factor: 3.0
+  timeout_margin_s: 2.0
+  minimum_stage_timeout_s: 5.0
+
+physics:
+  wheel_separation_m: 0.461
+  wheel_radius_m: 0.08
+
+world:
+  arena:
+    length_m: 8.0
+    width_m: 6.0
+    boundary_x_m: 4.0
+    boundary_y_m: 3.0
+  basic_time_step_ms: 16
+  controller_step_ms: 32
+
+timeouts:
+  action_budget_s: 60.0
+  readiness_budget_s: 15.0
+  readiness_settle_s: 1.0
+
+actuators:
+  left_wheel_motor:
+    max_velocity_radps: 25.0
+    max_torque_nm: 50.0
+  right_wheel_motor:
+    max_velocity_radps: 25.0
+    max_torque_nm: 50.0
+
+scripts:
+  match:
+    - action: nav_to_pose
+      goal_name: 搬箱子1
+    - action: move_distance
+      distance: -0.6
+      angle: 0.0
+    - action: move_distance
+      distance: 0.0
+      angle: 90.0
+    - action: nav_to_pose
+      goal_name: 放箱子1_1

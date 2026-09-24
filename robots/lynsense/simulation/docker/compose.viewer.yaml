@@ -1,0 +1,31 @@
+services:
+  lynsense-webots-viewer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rpent-lynsense-webots:r2025a-humble
+    init: true
+    network_mode: bridge
+    ports:
+      - "7047:7047"
+    environment:
+      ROS_DOMAIN_ID: "42"
+      ROS_LOCALHOST_ONLY: "1"
+      WEBOTS_HOME: /usr/local/webots
+      LYNSENSE_VIEWER_HOST: 0.0.0.0
+      LYNSENSE_VIEWER_PORT: "7047"
+    volumes:
+      - type: bind
+        source: ..
+        target: /workspace/simulation
+        read_only: true
+      - type: bind
+        source: ../../../../../lynsense_pytrees
+        target: /workspace/ws/src/lynsense_pytrees
+        read_only: true
+      - type: bind
+        source: ../../../../.artifacts/lynsense-webots
+        target: /workspace/artifacts
+        read_only: false
+    entrypoint: ["python3", "/workspace/simulation/docker/bootstrap_viewer.py"]
+    command: ["--phase", "${LYNSENSE_VIEWER_PHASE:-match}"]

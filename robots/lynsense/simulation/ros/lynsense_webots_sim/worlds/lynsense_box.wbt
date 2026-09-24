@@ -1,0 +1,749 @@
+#VRML_SIM R2025a utf8
+
+WorldInfo {
+  basicTimeStep 16
+  contactProperties [
+    ContactProperties {
+      bumpSound ""
+      rollSound ""
+      slideSound ""
+      material1 "wheel"
+      material2 "floor"
+      coulombFriction [ 100.0 ]
+      bounce 0
+      softCFM 0.00001
+    },
+    ContactProperties {
+      bumpSound ""
+      rollSound ""
+      slideSound ""
+      material1 "caster"
+      material2 "floor"
+      coulombFriction [ 0.05 ]
+      bounce 0
+      softCFM 0.00001
+    }
+    ContactProperties {
+      bumpSound ""
+      rollSound ""
+      slideSound ""
+      material1 "box"
+      material2 "floor"
+      coulombFriction [ 0.6 ]
+      bounce 0
+      softCFM 0.00001
+    }
+  ]
+}
+
+Viewpoint {
+  orientation -0.350323 0.145108 0.925320 2.409572
+  position 8 -8 10
+}
+
+Background {
+  skyColor [ 0.16 0.18 0.20 ]
+}
+
+DirectionalLight {
+  direction -0.4 -0.3 -1
+  ambientIntensity 0.5
+  intensity 1
+}
+
+DEF VIEWER_REFERENCE_GRID Pose {
+  translation 0 0 -0.01
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.18 0.20 0.22
+        metalness 0
+        roughness 1
+      }
+      geometry Plane {
+        size 30 30
+      }
+    }
+    Pose {
+      translation -4 0 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 0.018 6 0.004 } } ]
+    }
+    Pose {
+      translation -3 0 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 0.018 6 0.004 } } ]
+    }
+    Pose {
+      translation -2 0 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 0.018 6 0.004 } } ]
+    }
+    Pose {
+      translation -1 0 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 0.018 6 0.004 } } ]
+    }
+    Pose {
+      translation 0 0 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 0.018 6 0.004 } } ]
+    }
+    Pose {
+      translation 1 0 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 0.018 6 0.004 } } ]
+    }
+    Pose {
+      translation 2 0 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 0.018 6 0.004 } } ]
+    }
+    Pose {
+      translation 3 0 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 0.018 6 0.004 } } ]
+    }
+    Pose {
+      translation 4 0 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 0.018 6 0.004 } } ]
+    }
+    Pose {
+      translation 0 -3 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 8 0.018 0.004 } } ]
+    }
+    Pose {
+      translation 0 -2 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 8 0.018 0.004 } } ]
+    }
+    Pose {
+      translation 0 -1 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 8 0.018 0.004 } } ]
+    }
+    Pose {
+      translation 0 0 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 8 0.018 0.004 } } ]
+    }
+    Pose {
+      translation 0 1 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 8 0.018 0.004 } } ]
+    }
+    Pose {
+      translation 0 2 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 8 0.018 0.004 } } ]
+    }
+    Pose {
+      translation 0 3 0.012
+      children [ Shape { appearance PBRAppearance { baseColor 0.55 0.58 0.60 roughness 1 } geometry Box { size 8 0.018 0.004 } } ]
+    }
+  ]
+}
+
+DEF FLOOR Solid {
+  children [
+    DEF FLOOR_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.72 0.75 0.78
+        metalness 0
+        roughness 1
+      }
+      geometry Plane {
+        size 8 6
+      }
+    }
+  ]
+  contactMaterial "floor"
+  name "floor"
+  boundingObject USE FLOOR_SHAPE
+}
+
+DEF EA200_BOX Robot {
+  translation 2.024931 -2.493846 0.08
+  rotation 0 0 1 3.124139
+  supervisor TRUE
+  synchronization TRUE
+  controller "<extern>"
+  children [
+    Camera {
+      name "viewer_front_camera"
+      translation 0.16 0 1.05
+      rotation 0 1 0 0.45
+      width 960
+      height 540
+      fieldOfView 1.22
+      near 0.05
+      far 30
+    }
+    Pose {
+      translation -0.227 0 0.163
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.55 0.60 0.66
+            metalness 0
+            roughness 0.7
+          }
+          geometry Box {
+            size 0.70 0.60 0.35
+          }
+        }
+      ]
+    }
+    Pose {
+      translation -0.282 0 0.818
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0.72 0.76 0.80
+            metalness 0
+            roughness 0.6
+          }
+          geometry Box {
+            size 0.50 0.34 0.97
+          }
+        }
+      ]
+    }
+    SliderJoint {
+      jointParameters JointParameters {
+        axis 0 0 1
+        anchor 0.06 0 0.72
+        minPosition -0.478
+        maxPosition -0.018
+      }
+      device [
+        LinearMotor {
+          sound ""
+          name "waist_motor"
+          maxVelocity 0.0248
+          maxForce 10000
+        }
+        PositionSensor {
+          name "waist_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0.06 0 0.72
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.66 0.69 0.73
+              metalness 0.1
+              roughness 0.55
+            }
+            geometry Box {
+              size 0.30 0.58 0.24
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0 0 1
+              anchor 0.08 0.22 0
+            }
+            device [
+              RotationalMotor {
+                sound ""
+                name "left_joint1_motor"
+                maxVelocity 1
+                maxTorque 30
+              }
+              PositionSensor { name "left_joint1_sensor" }
+            ]
+            endPoint Solid {
+              translation 0.08 0.22 0
+              children [
+                DEF LEFT_ARM_LINK1 Shape {
+                  appearance PBRAppearance { baseColor 0.42 0.47 0.53 metalness 0.2 roughness 0.5 }
+                  geometry Box { size 0.10 0.08 0.16 }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters { axis 0 0 1 anchor 0 0 0.08 }
+                  device [
+                    RotationalMotor { sound "" name "left_joint2_motor" maxVelocity 1 maxTorque 30 }
+                    PositionSensor { name "left_joint2_sensor" }
+                  ]
+                  endPoint Solid {
+                    translation 0 0 0.08
+                    children [
+                      Shape { appearance PBRAppearance { baseColor 0.42 0.47 0.53 metalness 0.2 roughness 0.5 } geometry Box { size 0.10 0.08 0.16 } }
+                      HingeJoint {
+                        jointParameters HingeJointParameters { axis 0 0 1 anchor 0.12 0 0 }
+                        device [
+                          RotationalMotor { sound "" name "left_joint3_motor" maxVelocity 1 maxTorque 20 }
+                          PositionSensor { name "left_joint3_sensor" }
+                        ]
+                        endPoint Solid {
+                          translation 0.12 0 0
+                          children [
+                            Shape { appearance PBRAppearance { baseColor 0.42 0.47 0.53 metalness 0.2 roughness 0.5 } geometry Box { size 0.20 0.07 0.10 } }
+                            HingeJoint {
+                              jointParameters HingeJointParameters { axis 0 0 1 anchor 0.12 0 0 }
+                              device [
+                                RotationalMotor { sound "" name "left_joint4_motor" maxVelocity 1 maxTorque 20 }
+                                PositionSensor { name "left_joint4_sensor" }
+                              ]
+                              endPoint Solid {
+                                translation 0.12 0 0
+                                children [
+                                  Shape { appearance PBRAppearance { baseColor 0.42 0.47 0.53 metalness 0.2 roughness 0.5 } geometry Box { size 0.18 0.06 0.09 } }
+                                  HingeJoint {
+                                    jointParameters HingeJointParameters { axis 0 0 1 anchor 0.10 0 0 }
+                                    device [
+                                      RotationalMotor { sound "" name "left_joint5_motor" maxVelocity 1 maxTorque 12 }
+                                      PositionSensor { name "left_joint5_sensor" }
+                                    ]
+                                    endPoint Solid {
+                                      translation 0.10 0 0
+                                      children [
+                                        Shape { appearance PBRAppearance { baseColor 0.42 0.47 0.53 metalness 0.2 roughness 0.5 } geometry Box { size 0.14 0.05 0.08 } }
+                                        HingeJoint {
+                                          jointParameters HingeJointParameters { axis 0 0 1 anchor 0.08 0 0 }
+                                          device [
+                                            RotationalMotor { sound "" name "left_joint6_motor" maxVelocity 1 maxTorque 12 }
+                                            PositionSensor { name "left_joint6_sensor" }
+                                          ]
+                                          endPoint Solid {
+                                            translation 0.08 0 0
+                                            children [
+                                              Shape { appearance PBRAppearance { baseColor 0.35 0.39 0.44 metalness 0.2 roughness 0.5 } geometry Box { size 0.10 0.10 0.07 } }
+                                              Pose {
+                                                translation 0.04 0 0
+                                                children [
+                                                  DEF LEFT_GRIPPER_PALM Shape {
+                                                    appearance PBRAppearance { baseColor 0.28 0.30 0.34 metalness 0.1 roughness 0.6 }
+                                                    geometry Box { size 0.08 0.18 0.09 }
+                                                  }
+                                                ]
+                                              }
+                                              Pose {
+                                                translation 0.07 -0.035 0
+                                                children [
+                                                  Shape {
+                                                    appearance PBRAppearance { baseColor 0.20 0.22 0.25 metalness 0 roughness 0.8 }
+                                                    geometry Box { size 0.14 0.025 0.13 }
+                                                  }
+                                                ]
+                                              }
+                                              HingeJoint {
+                                                jointParameters HingeJointParameters { axis 0 0 1 anchor 0 0.035 0 }
+                                                device [
+                                                  RotationalMotor { sound "" name "left_gripper_motor" maxVelocity 1 maxTorque 8 }
+                                                  PositionSensor { name "left_gripper_sensor" }
+                                                ]
+                                                endPoint Solid {
+                                                  translation 0 0.035 0
+                                                  children [
+                                                    Pose {
+                                                      translation 0.07 0 0
+                                                      children [
+                                                        Shape {
+                                                          appearance PBRAppearance { baseColor 0.20 0.22 0.25 metalness 0 roughness 0.8 }
+                                                          geometry Box { size 0.14 0.025 0.13 }
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                  name "left_gripper_finger"
+                                                  contactMaterial "caster"
+                                                  boundingObject Box { size 0.08 0.02 0.10 }
+                                                  physics Physics { density -1 mass 0.1 inertiaMatrix [ 0.000047 0.000023 0.000047 ] }
+                                                }
+                                              }
+                                            ]
+                                            name "left_wrist"
+                                            contactMaterial "caster"
+                                            boundingObject Box { size 0.10 0.10 0.07 }
+                                            physics Physics { density -1 mass 0.5 inertiaMatrix [ 0.0007 0.0007 0.0005 ] }
+                                          }
+                                        }
+                                      ]
+                                      name "left_forearm"
+                                      contactMaterial "caster"
+                                      boundingObject Box { size 0.14 0.05 0.08 }
+                                      physics Physics { density -1 mass 0.7 inertiaMatrix [ 0.001 0.001 0.0007 ] }
+                                    }
+                                  }
+                                ]
+                                name "left_elbow"
+                                contactMaterial "caster"
+                                boundingObject Box { size 0.18 0.06 0.09 }
+                                physics Physics { density -1 mass 0.8 inertiaMatrix [ 0.0015 0.0015 0.001 ] }
+                              }
+                            }
+                          ]
+                          name "left_upper_arm"
+                          contactMaterial "caster"
+                          boundingObject Box { size 0.20 0.07 0.10 }
+                          physics Physics { density -1 mass 1.0 inertiaMatrix [ 0.0025 0.0025 0.0018 ] }
+                        }
+                      }
+                    ]
+                    name "left_shoulder"
+                    contactMaterial "caster"
+                    boundingObject Box { size 0.10 0.08 0.16 }
+                    physics Physics { density -1 mass 1.0 inertiaMatrix [ 0.0025 0.0025 0.0018 ] }
+                  }
+                }
+              ]
+              name "left_arm_base"
+              contactMaterial "caster"
+              boundingObject USE LEFT_ARM_LINK1
+              physics Physics { density -1 mass 1.2 inertiaMatrix [ 0.0035 0.0035 0.0025 ] }
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters { axis 0 0 1 anchor 0.08 -0.22 0 }
+            device [
+              RotationalMotor { sound "" name "right_joint1_motor" maxVelocity 1 maxTorque 30 }
+              PositionSensor { name "right_joint1_sensor" }
+            ]
+            endPoint Solid {
+              translation 0.08 -0.22 0
+              children [
+                DEF RIGHT_ARM_LINK1 Shape {
+                  appearance PBRAppearance { baseColor 0.42 0.47 0.53 metalness 0.2 roughness 0.5 }
+                  geometry Box { size 0.10 0.08 0.16 }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters { axis 0 0 1 anchor 0 0 0.08 }
+                  device [
+                    RotationalMotor { sound "" name "right_joint2_motor" maxVelocity 1 maxTorque 30 }
+                    PositionSensor { name "right_joint2_sensor" }
+                  ]
+                  endPoint Solid {
+                    translation 0 0 0.08
+                    children [
+                      Shape { appearance PBRAppearance { baseColor 0.42 0.47 0.53 metalness 0.2 roughness 0.5 } geometry Box { size 0.10 0.08 0.16 } }
+                      HingeJoint {
+                        jointParameters HingeJointParameters { axis 0 0 1 anchor 0.12 0 0 }
+                        device [
+                          RotationalMotor { sound "" name "right_joint3_motor" maxVelocity 1 maxTorque 20 }
+                          PositionSensor { name "right_joint3_sensor" }
+                        ]
+                        endPoint Solid {
+                          translation 0.12 0 0
+                          children [
+                            Shape { appearance PBRAppearance { baseColor 0.42 0.47 0.53 metalness 0.2 roughness 0.5 } geometry Box { size 0.20 0.07 0.10 } }
+                            HingeJoint {
+                              jointParameters HingeJointParameters { axis 0 0 1 anchor 0.12 0 0 }
+                              device [
+                                RotationalMotor { sound "" name "right_joint4_motor" maxVelocity 1 maxTorque 20 }
+                                PositionSensor { name "right_joint4_sensor" }
+                              ]
+                              endPoint Solid {
+                                translation 0.12 0 0
+                                children [
+                                  Shape { appearance PBRAppearance { baseColor 0.42 0.47 0.53 metalness 0.2 roughness 0.5 } geometry Box { size 0.18 0.06 0.09 } }
+                                  HingeJoint {
+                                    jointParameters HingeJointParameters { axis 0 0 1 anchor 0.10 0 0 }
+                                    device [
+                                      RotationalMotor { sound "" name "right_joint5_motor" maxVelocity 1 maxTorque 12 }
+                                      PositionSensor { name "right_joint5_sensor" }
+                                    ]
+                                    endPoint Solid {
+                                      translation 0.10 0 0
+                                      children [
+                                        Shape { appearance PBRAppearance { baseColor 0.42 0.47 0.53 metalness 0.2 roughness 0.5 } geometry Box { size 0.14 0.05 0.08 } }
+                                        HingeJoint {
+                                          jointParameters HingeJointParameters { axis 0 0 1 anchor 0.08 0 0 }
+                                          device [
+                                            RotationalMotor { sound "" name "right_joint6_motor" maxVelocity 1 maxTorque 12 }
+                                            PositionSensor { name "right_joint6_sensor" }
+                                          ]
+                                          endPoint Solid {
+                                            translation 0.08 0 0
+                                            children [
+                                              Shape { appearance PBRAppearance { baseColor 0.35 0.39 0.44 metalness 0.2 roughness 0.5 } geometry Box { size 0.10 0.10 0.07 } }
+                                              Pose {
+                                                translation 0.04 0 0
+                                                children [
+                                                  DEF RIGHT_GRIPPER_PALM Shape {
+                                                    appearance PBRAppearance { baseColor 0.28 0.30 0.34 metalness 0.1 roughness 0.6 }
+                                                    geometry Box { size 0.08 0.18 0.09 }
+                                                  }
+                                                ]
+                                              }
+                                              Pose {
+                                                translation 0.07 0.035 0
+                                                children [
+                                                  Shape {
+                                                    appearance PBRAppearance { baseColor 0.20 0.22 0.25 metalness 0 roughness 0.8 }
+                                                    geometry Box { size 0.14 0.025 0.13 }
+                                                  }
+                                                ]
+                                              }
+                                              HingeJoint {
+                                                jointParameters HingeJointParameters { axis 0 0 -1 anchor 0 -0.035 0 }
+                                                device [
+                                                  RotationalMotor { sound "" name "right_gripper_motor" maxVelocity 1 maxTorque 8 }
+                                                  PositionSensor { name "right_gripper_sensor" }
+                                                ]
+                                                endPoint Solid {
+                                                  translation 0 -0.035 0
+                                                  children [
+                                                    Pose {
+                                                      translation 0.07 0 0
+                                                      children [
+                                                        Shape {
+                                                          appearance PBRAppearance { baseColor 0.20 0.22 0.25 metalness 0 roughness 0.8 }
+                                                          geometry Box { size 0.14 0.025 0.13 }
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                  name "right_gripper_finger"
+                                                  contactMaterial "caster"
+                                                  boundingObject Box { size 0.08 0.02 0.10 }
+                                                  physics Physics { density -1 mass 0.1 inertiaMatrix [ 0.000047 0.000023 0.000047 ] }
+                                                }
+                                              }
+                                            ]
+                                            name "right_wrist"
+                                            contactMaterial "caster"
+                                            boundingObject Box { size 0.10 0.10 0.07 }
+                                            physics Physics { density -1 mass 0.5 inertiaMatrix [ 0.0007 0.0007 0.0005 ] }
+                                          }
+                                        }
+                                      ]
+                                      name "right_forearm"
+                                      contactMaterial "caster"
+                                      boundingObject Box { size 0.14 0.05 0.08 }
+                                      physics Physics { density -1 mass 0.7 inertiaMatrix [ 0.001 0.001 0.0007 ] }
+                                    }
+                                  }
+                                ]
+                                name "right_elbow"
+                                contactMaterial "caster"
+                                boundingObject Box { size 0.18 0.06 0.09 }
+                                physics Physics { density -1 mass 0.8 inertiaMatrix [ 0.0015 0.0015 0.001 ] }
+                              }
+                            }
+                          ]
+                          name "right_upper_arm"
+                          contactMaterial "caster"
+                          boundingObject Box { size 0.20 0.07 0.10 }
+                          physics Physics { density -1 mass 1.0 inertiaMatrix [ 0.0025 0.0025 0.0018 ] }
+                        }
+                      }
+                    ]
+                    name "right_shoulder"
+                    contactMaterial "caster"
+                    boundingObject Box { size 0.10 0.08 0.16 }
+                    physics Physics { density -1 mass 1.0 inertiaMatrix [ 0.0025 0.0025 0.0018 ] }
+                  }
+                }
+              ]
+              name "right_arm_base"
+              contactMaterial "caster"
+              boundingObject USE RIGHT_ARM_LINK1
+              physics Physics { density -1 mass 1.2 inertiaMatrix [ 0.0035 0.0035 0.0025 ] }
+            }
+          }
+        ]
+        name "upper_body"
+        contactMaterial "caster"
+        boundingObject Box { size 0.30 0.58 0.24 }
+        physics Physics { density -1 mass 10 inertiaMatrix [ 0.35 0.25 0.35 ] }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0 0.2305 0
+      }
+      device [
+          RotationalMotor {
+            sound ""
+          name "left_wheel_motor"
+          maxVelocity 25
+          maxTorque 50
+        }
+      ]
+      endPoint Solid {
+        translation 0 0.2305 0
+        children [
+          DEF LEFT_WHEEL_POSE Pose {
+            rotation 1 0 0 1.5707963267948966
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.16 0.16 0.18
+                  metalness 0
+                  roughness 0.8
+                }
+                geometry DEF LEFT_WHEEL_GEOMETRY Cylinder {
+                  radius 0.08
+                  height 0.078
+                }
+              }
+            ]
+          }
+        ]
+        name "left_wheel"
+        contactMaterial "wheel"
+        boundingObject USE LEFT_WHEEL_POSE
+        physics Physics {
+          density -1
+          mass 5
+          centerOfMass 0 0 0
+          inertiaMatrix [ 0.010535 0.016 0.010535 ]
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0 -0.2305 0
+      }
+      device [
+          RotationalMotor {
+            sound ""
+          name "right_wheel_motor"
+          maxVelocity 25
+          maxTorque 50
+        }
+      ]
+      endPoint Solid {
+        translation 0 -0.2305 0
+        children [
+          DEF RIGHT_WHEEL_POSE Pose {
+            rotation 1 0 0 1.5707963267948966
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.16 0.16 0.18
+                  metalness 0
+                  roughness 0.8
+                }
+                geometry DEF RIGHT_WHEEL_GEOMETRY Cylinder {
+                  radius 0.08
+                  height 0.078
+                }
+              }
+            ]
+          }
+        ]
+        name "right_wheel"
+        contactMaterial "wheel"
+        boundingObject USE RIGHT_WHEEL_POSE
+        physics Physics {
+          density -1
+          mass 5
+          centerOfMass 0 0 0
+          inertiaMatrix [ 0.010535 0.016 0.010535 ]
+        }
+      }
+    }
+    BallJoint {
+      jointParameters BallJointParameters {
+        anchor -0.436 0.18 -0.0425
+        dampingConstant 0.1
+      }
+      endPoint Solid {
+        translation -0.436 0.18 -0.0425
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.30 0.32 0.36
+              metalness 0
+              roughness 0.7
+            }
+            geometry DEF LEFT_CASTER_GEOMETRY Sphere {
+              radius 0.0375
+            }
+          }
+        ]
+        name "left_caster_ball"
+        contactMaterial "caster"
+        boundingObject USE LEFT_CASTER_GEOMETRY
+        physics Physics {
+          density -1
+          mass 5
+          centerOfMass 0 0 0
+          inertiaMatrix [ 0.005625 0.005625 0.005625 ]
+        }
+      }
+    }
+    BallJoint {
+      jointParameters BallJointParameters {
+        anchor -0.436 -0.18 -0.0425
+        dampingConstant 0.1
+      }
+      endPoint Solid {
+        translation -0.436 -0.18 -0.0425
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.30 0.32 0.36
+              metalness 0
+              roughness 0.7
+            }
+            geometry DEF RIGHT_CASTER_GEOMETRY Sphere {
+              radius 0.0375
+            }
+          }
+        ]
+        name "right_caster_ball"
+        contactMaterial "caster"
+        boundingObject USE RIGHT_CASTER_GEOMETRY
+        physics Physics {
+          density -1
+          mass 5
+          centerOfMass 0 0 0
+          inertiaMatrix [ 0.005625 0.005625 0.005625 ]
+        }
+      }
+    }
+  ]
+  name "EA200_BOX"
+  boundingObject Group {
+    children [
+      Pose {
+        translation -0.227 0 0.163
+        children [
+          Shape {
+            geometry Box {
+              size 0.70 0.60 0.35
+            }
+          }
+        ]
+      }
+      Pose {
+        translation -0.282 0 0.818
+        children [
+          Shape {
+            geometry Box {
+              size 0.50 0.34 0.97
+            }
+          }
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 120
+    centerOfMass -0.18 0 0.75
+    inertiaMatrix [ 38.870488 40.64961 7.960788 ]
+  }
+}
+
+DEF BOX_1 Solid {
+  translation 1.674931 -2.493846 0.1085
+  rotation 0 0 1 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.58 0.42 0.24
+        metalness 0
+        roughness 0.85
+      }
+      geometry Box {
+        size 0.397 0.295 0.217
+      }
+    }
+  ]
+  name "box1"
+  contactMaterial "box"
+  boundingObject Box {
+    size 0.397 0.295 0.217
+  }
+  physics Physics {
+    density -1
+    mass 1
+    centerOfMass 0 0 0
+    inertiaMatrix [ 0.010807 0.033374 0.028516 ]
+  }
+}

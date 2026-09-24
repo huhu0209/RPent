@@ -1,0 +1,27 @@
+services:
+  lynsense-webots-smoke:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rpent-lynsense-webots:r2025a-humble
+    network_mode: none
+    environment:
+      ROS_DOMAIN_ID: "42"
+      ROS_LOCALHOST_ONLY: "1"
+      WEBOTS_HOME: /usr/local/webots
+      LYNSENSE_SIM_CONFIG: /workspace/simulation/ros/lynsense_webots_sim/config/smoke.yaml
+    volumes:
+      - type: bind
+        source: ..
+        target: /workspace/simulation
+        read_only: true
+      - type: bind
+        source: ../../../../../lynsense_pytrees
+        target: /workspace/ws/src/lynsense_pytrees
+        read_only: true
+      - type: bind
+        source: ../../../../.artifacts/lynsense-webots
+        target: /workspace/artifacts
+        read_only: false
+    entrypoint: ["python3", "/workspace/simulation/docker/bootstrap.py"]
+    command: ["--phase", "all"]

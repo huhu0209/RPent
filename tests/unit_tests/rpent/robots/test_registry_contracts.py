@@ -29,10 +29,19 @@ from robots.robotwin.robot_spec import (
 from rpent.robots import enumerate_robots, get_robot_spec
 from rpent.robots.robot_spec import RobotSpec, RunConfig
 
-EXPECTED_ROBOTS = ("dual_franka", "franka", "libero", "lynsense", "robocasa", "robotwin")
+EXPECTED_ROBOTS = (
+    "dual_franka",
+    "franka",
+    "libero",
+    "lynsense",
+    "lynsense_simulation",
+    "robocasa",
+    "robotwin",
+)
 
 PROMPT_VARIABLES = {
     "lynsense": {},
+    "lynsense_simulation": {},
     "libero": {
         "suite": "libero_object_task",
         "task": 2,
