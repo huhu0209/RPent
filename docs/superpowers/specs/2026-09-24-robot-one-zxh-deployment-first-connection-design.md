@@ -5,8 +5,8 @@
 **Operator:** huhu
 **Target host:** zxh@192.168.11.11
 **Deployment root:** `~/zxh/`
-**LynrotControl:** `~/zxh/lynrotcontrol` (`dev_hu`, `5e5e6b84ce4280750ea64b6fe34f159ec162cc8f`)
-**RPent:** `~/zxh/RPent` (`main`; exact SHA recorded at deployment verification)
+**LynrotControl:** `~/zxh/lynrotcontrol` (`dev_hu`, `2fea14e37b2beab796499ed3ea78578985546b2b`)
+**RPent:** `~/zxh/RPent` (`main`; exact SHA pinned in the implementation plan's deployment manifest and verified as a Phase 2 exit gate)
 
 ## Goal
 
@@ -76,7 +76,7 @@ All commands are run via `ssh zxh@192.168.11.11`.
 
 4. Authority directory state:
    ```bash
-   found=$(find /tmp/lynrotcontrol-authority-1000/endpoints/*/claims -name '*.json' -type f 2>/dev/null | head -5); if [ -z "$found" ]; then echo authority-clean; else echo "$found"; fi
+   found=$(find /tmp/lynrotcontrol-authority-1000/endpoints/*/claims -type f 2>&1); if echo "$found" | grep -q "No such"; then echo authority-clean; elif [ -z "$found" ]; then echo authority-clean; else echo "$found"; fi
    ```
    Interpretation:
    - `authority-clean`: pass
@@ -113,7 +113,7 @@ contact, no ROS initialization.
    ```bash
    cd ~/zxh/lynrotcontrol && git rev-parse HEAD
    ```
-   Expected: `5e5e6b84ce4280750ea64b6fe34f159ec162cc8f`
+   Expected: `2fea14e37b2beab796499ed3ea78578985546b2b`
 4. Verify artifact:
    ```bash
    sha256sum ~/zxh/lynrotcontrol/OWNERSHIP_PROTOCOL.json
@@ -147,6 +147,24 @@ Expected: exactly 469 tests, 0 failures, 0 errors, 0 skipped.
 If Python dependencies are missing on target, the deployment report lists
 them and stops. No automatic dependency installation without operator
 review.
+
+### 2D: Stage Phase 3 Inputs
+
+Before Phase 3 authorization, the following must exist on the target:
+
+1. `/etc/rpent/commissioning/operator-policy.json`: root-owned, mode 0600,
+   containing the reviewed trusted operator policy. Installed by the
+   operator with `sudo install -m 0600 <source> <target>`.
+2. `~/zxh/commissioning/manifest.json`: the reviewed commissioning
+   manifest referencing `~/zxh/lynrotcontrol` and the reviewed instance.
+3. `~/zxh/commissioning/host-enrollment.json`: machine-bound enrollment
+   record for the target host.
+4. `~/zxh/commissioning/authorization.json`: exact-schema authorization
+   file with bounded expiry, generated fresh for this attempt.
+5. All four files' SHA-256 digests recorded in the deployment manifest.
+
+Phase 2 does not create or authorize these files; it verifies their
+presence, ownership, mode, and digest only.
 
 ### Rollback
 
@@ -225,6 +243,7 @@ All conditions from `commissioning_runner.py` are enforced:
 | Outcome | Action |
 |---|---|
 | Endpoint authority conflict | Stop before spawn; record disposition; report |
+| Durable claim write failure after activation | Stop; service may be live with no durable claim; record `claim_write_failed`; no automatic cleanup; operator must inspect service and authority state before any retry |
 | Bootstrap handshake failure | Stop; claim may be orphaned; record; report |
 | Device initialization failure | Stop; retain claim; record; report |
 | State read failure (invalid/missing) | Stop; record; dependency claim state may be active or unknown; report |
@@ -251,10 +270,18 @@ retained claims requires a separate operator decision using the
 ## Evidence Model
 
 Evidence is first written on the target machine under the RPent
-commissioning output directory. After Phase 3, evidence is copied to the
-local development machine via `scp` and its SHA-256 is recorded in the
-local repository. The copy is verified by digest; any mismatch rejects
-the evidence transfer.
+commissioning output directory (exact paths recorded in the run result).
+After Phase 3, the following are copied to the local development machine:
+
+```bash
+scp zxh@<target>:~/zxh/RPent/commissioning-artifacts/<attempt-id>/*.json \
+    /home/huhu/work/RPent_lynsense/RPent/commissioning-artifacts/<attempt-id>/
+```
+
+Each file's SHA-256 is computed on both hosts and compared. The local
+destination must not already exist; a partial transfer is rejected and
+the partial destination is not used. Any digest mismatch rejects the
+evidence transfer.
 
 No credentials, tokens, token digests, or authorization secrets appear
 in evidence files.
@@ -264,7 +291,7 @@ in evidence files.
 | Operation | Phase 1 | Phase 2 | Phase 3 |
 |---|---|---|---|
 | SSH read commands | yes | yes | yes |
-| File write on target | no | yes | bounded (commissioning evidence and lock records only) |
+| File write on target | no | yes | bounded (commissioning evidence, RPent lock, dependency runtime dirs, service logs/sockets/locks, authority dirs, claim records) |
 | git clone/pull | no | yes | no |
 | Offline unit tests | no | yes | no |
 | ROS node/topic list | read-only | no | no |
