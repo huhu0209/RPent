@@ -174,6 +174,7 @@ class _DependencyOwnershipGate:
                 endpoint_scope_sha256=endpoint_scope,
                 ros_domain_id=request.ros_domain_id,
                 approved_effects=tuple(request.approved_effects),
+                operator_verification=dict(getattr(request, "operator_verification", {})),
                 expected_endpoints=tuple(
                     endpoint_type(
                         item.subsystem, item.endpoint_id, item.transport, item.locator
@@ -357,6 +358,9 @@ class _OwnedRuntimeAdapter:
         except (AttributeError, KeyError, TypeError) as exc:
             raise ResultNormalizationError(f"fixed read unavailable for {group}") from exc
         return _normalize_state(group, data)
+
+    def read_state(self, group: str) -> StateEvidence:
+        return self.read_group(group)
 
     def service_identity(self) -> ServiceEvidence:
         value = getattr(self._raw, "service_identity", None)
