@@ -120,6 +120,8 @@ def valid_v2_profile() -> dict[str, Any]:
     source["chassis_profiles"]["pickup"]["carries_box"] = False
     source["chassis_profiles"]["retreat"]["carries_box"] = True
     source["runtime_binding"] = {
+        "site_id": "robot-one-site",
+        "robot_id": "robot-one",
         "lynrotcontrol_instance": "robot-one-reviewed",
         "lynrotcontrol_config_sha256": "a" * 64,
         "execution_host": "offline-fixture-host",
@@ -336,6 +338,10 @@ def test_v2_profile_normalizes_runtime_transport_and_carry_bindings() -> None:
 
     assert profile.version == 2
     assert profile.runtime_binding is not None
+    assert (profile.runtime_binding.site_id, profile.runtime_binding.robot_id) == (
+        "robot-one-site",
+        "robot-one",
+    )
     assert profile.runtime_binding.ros_domain_id == 3
     assert profile.chassis_runtime is not None
     assert profile.chassis_runtime.kind == "bounded_odom_cmd_vel"

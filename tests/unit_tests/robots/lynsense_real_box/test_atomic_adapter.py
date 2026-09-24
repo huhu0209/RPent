@@ -329,6 +329,8 @@ class FakeRuntimeIdentity:
             "valid": True,
             "timestamp": self.clock.now(),
             "profile_sha256": atomic_profile_hash(self.profile),
+            "site_id": binding.site_id,
+            "robot_id": binding.robot_id,
             "lynrotcontrol_instance": binding.lynrotcontrol_instance,
             "lynrotcontrol_config_sha256": (
                 binding.lynrotcontrol_config_sha256
@@ -1269,6 +1271,27 @@ def test_timed_out_gripper_stop_cannot_resume_after_late_cancel():
 
     assert item.acknowledge_operator_review()["reason"] == "stop_completion_unknown"
     item.close()
+
+
+def test_repeated_confirmed_stop_can_clear_nonpermanent_uncertainty():
+    item, _, chassis, _, _ = v2_adapter()
+    original_stop = chassis.stop
+
+    def unconfirmed_stop() -> FakeResult:
+        return FakeResult(1, "stop unavailable")
+
+    chassis.stop = unconfirmed_stop
+    failed = item.stop_all()
+    assert failed["status"] == "failed"
+    assert failed["reason"] == "stop_unconfirmed"
+    assert item._stop_pending.is_set()
+
+    chassis.stop = original_stop
+    confirmed = item.stop_all()
+    assert confirmed["status"] == "ok"
+    assert not item._stop_pending.is_set()
+    assert item.acknowledge_operator_review()["status"] == "ok"
+    assert item.resume_from_acknowledged_review()["status"] == "ok"
 
 
 def test_stop_exception_locks_out_recovery():

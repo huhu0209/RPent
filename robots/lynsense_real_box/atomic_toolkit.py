@@ -39,6 +39,7 @@ class LynsenseAtomicToolkit(Toolkit):
     """Expose only reviewed atomic capabilities to the API Planner."""
 
     include_image_reader = False
+    _allows_live_dispatch = False
 
     class _NoStepStore:
         def latest_record(self) -> None:
@@ -66,11 +67,13 @@ class LynsenseAtomicToolkit(Toolkit):
         expected_profile_sha256 = atomic_profile_hash(profile)
         self._profile = profile
         self._profile_sha256 = expected_profile_sha256
-        if profile.mode != "dry_run":
+        if profile.mode == "live" and not self._allows_live_dispatch:
             raise ValueError(
                 "the offline atomic Toolkit rejects mode='live'; live dispatch "
                 "requires a separate reviewed integration"
             )
+        if profile.mode != "live" and self._allows_live_dispatch:
+            raise ValueError("the live atomic Toolkit requires mode='live'")
         if (
             adapter.profile_sha256 != expected_profile_sha256
             or evidence.profile_sha256 != expected_profile_sha256

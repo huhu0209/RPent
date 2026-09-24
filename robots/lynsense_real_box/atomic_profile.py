@@ -52,6 +52,8 @@ class ChassisProfile:
 
 @dataclass(frozen=True, slots=True)
 class RuntimeBinding:
+    site_id: str
+    robot_id: str
     lynrotcontrol_instance: str
     lynrotcontrol_config_sha256: str
     execution_host: str
@@ -214,6 +216,8 @@ _GRIPPER_KEYS = frozenset(
 )
 _RUNTIME_BINDING_KEYS = frozenset(
     {
+        "site_id",
+        "robot_id",
         "lynrotcontrol_instance",
         "lynrotcontrol_config_sha256",
         "execution_host",
@@ -517,6 +521,8 @@ def _public_document(profile: AtomicCapabilityProfile) -> dict[str, Any]:
         "runtime_binding": None
         if profile.runtime_binding is None
         else {
+            "site_id": profile.runtime_binding.site_id,
+            "robot_id": profile.runtime_binding.robot_id,
             "lynrotcontrol_instance": (
                 profile.runtime_binding.lynrotcontrol_instance
             ),
@@ -952,6 +958,8 @@ def _runtime_binding(value: Any) -> RuntimeBinding:
             "runtime_binding.ros_domain_id must be a valid ROS domain"
         )
     return RuntimeBinding(
+        site_id=_string(fields["site_id"], "runtime_binding.site_id"),
+        robot_id=_string(fields["robot_id"], "runtime_binding.robot_id"),
         lynrotcontrol_instance=_string(
             fields["lynrotcontrol_instance"],
             "runtime_binding.lynrotcontrol_instance",

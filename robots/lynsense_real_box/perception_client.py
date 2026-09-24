@@ -129,6 +129,30 @@ class BoxPerceptionClient:
         self._latest_status: StatusSample | None = None
         self.trigger_count = 0
 
+    def _trigger_timeout_s(self) -> float:
+        binding = getattr(self._profile, "perception_binding", None)
+        if binding is not None:
+            return binding.trigger_timeout_s
+        return self._profile.perception.trigger_timeout_s
+
+    def _result_timeout_s(self) -> float:
+        binding = getattr(self._profile, "perception_binding", None)
+        if binding is not None:
+            return binding.result_deadline_s
+        return self._profile.perception.result_timeout_s
+
+    def _expected_frame(self) -> str:
+        binding = getattr(self._profile, "perception_binding", None)
+        if binding is not None:
+            return binding.expected_frame
+        return self._profile.perception.frame
+
+    def _pose_max_age_s(self) -> float:
+        binding = getattr(self._profile, "perception_binding", None)
+        if binding is not None:
+            return binding.pose_max_age_s
+        return self._profile.freshness["perception_max_age_s"]
+
     def detect_box(self) -> dict[str, Any]:
         """Run one perception attempt; never retry inside this method."""
 
@@ -145,23 +169,20 @@ class BoxPerceptionClient:
         requested_at_s = self._now_s()
         self._armed = True
         try:
-            receipt = self._transport.start_trigger(
-                self._profile.perception.trigger_timeout_s
-            )
+            receipt = self._transport.start_trigger(self._trigger_timeout_s())
         except Exception:
             self._armed = False
             return {"status": "failed", "reason": "trigger_request_failed"}
         finally:
             self.trigger_count += 1
 
-        if not isinstance(receipt, dict) or receipt.get(
-            "request_submitted"
-        ) is not True:
+        if (
+            not isinstance(receipt, dict)
+            or receipt.get("request_submitted") is not True
+        ):
             self._armed = False
             reason = "trigger_not_submitted"
-            if isinstance(receipt, dict) and isinstance(
-                receipt.get("reason"), str
-            ):
+            if isinstance(receipt, dict) and isinstance(receipt.get("reason"), str):
                 reason = receipt["reason"]
             return {
                 "status": "failed",
@@ -170,9 +191,7 @@ class BoxPerceptionClient:
             }
 
         try:
-            self._transport.wait_until(
-                requested_at_s + self._profile.perception.result_timeout_s
-            )
+            self._transport.wait_until(requested_at_s + self._result_timeout_s())
         except Exception:
             return {"status": "failed", "reason": "result_wait_failed"}
         finally:
@@ -224,7 +243,7 @@ class BoxPerceptionClient:
 
         if pose is None:
             return {**common, "status": "failed", "reason": "pose_timeout"}
-        if pose.frame != self._profile.perception.frame:
+        if pose.frame != self._expected_frame():
             return {**common, "status": "failed", "reason": "wrong_frame"}
         if pose.transform_valid is not True:
             return {**common, "status": "failed", "reason": "transform_invalid"}
@@ -232,7 +251,7 @@ class BoxPerceptionClient:
         now = self._now_s()
         pose_age_s = now - pose.source_stamp_s
         status_age_s = now - status.source_stamp_s
-        max_age_s = self._profile.freshness["perception_max_age_s"]
+        max_age_s = self._pose_max_age_s()
         if (
             not math.isfinite(pose_age_s)
             or not math.isfinite(status_age_s)

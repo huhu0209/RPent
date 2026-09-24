@@ -117,6 +117,7 @@ class LynrotControlAtomicAdapter:
         self._dispatch_generation = 0
         self._stop_in_progress = 0
         self._stop_completion_unknown = False
+        self._stop_uncertainty_permanent = False
         self._unsettled_stop_futures: list[Future[Any]] = []
         self._joint_sequences: dict[str, float | None] = {
             "left": None,
@@ -781,6 +782,7 @@ class LynrotControlAtomicAdapter:
             # A blocked synchronous submit cannot be cancelled here. No stop
             # request has been issued, so leave recovery permanently locked out.
             self._stop_completion_unknown = True
+            self._stop_uncertainty_permanent = True
             self._capability_mode = "operator_review"
             return {
                 "status": "failed",
@@ -797,6 +799,7 @@ class LynrotControlAtomicAdapter:
                 "stopping",
             }:
                 self._stop_completion_unknown = True
+                self._stop_uncertainty_permanent = True
             self._capability_mode = "stopping"
         finally:
             self._dispatch_lock.release()
@@ -821,7 +824,8 @@ class LynrotControlAtomicAdapter:
         confirmed = all(item["confirmed"] for item in stop.values())
         if not confirmed:
             self._stop_completion_unknown = True
-        if confirmed and not self._stop_completion_unknown:
+        if confirmed and not self._stop_uncertainty_permanent:
+            self._stop_completion_unknown = False
             with self._stop_intent_lock:
                 if self._stop_generation == stop_generation:
                     self._stop_pending.clear()
@@ -940,6 +944,8 @@ class LynrotControlAtomicAdapter:
             assert chassis is not None
             expected = {
                 "profile_sha256": self._profile_sha256,
+                "site_id": binding.site_id,
+                "robot_id": binding.robot_id,
                 "lynrotcontrol_instance": binding.lynrotcontrol_instance,
                 "lynrotcontrol_config_sha256": (
                     binding.lynrotcontrol_config_sha256
@@ -1475,6 +1481,7 @@ class LynrotControlAtomicAdapter:
                     }
                 except FutureTimeoutError:
                     self._stop_completion_unknown = True
+                    self._stop_uncertainty_permanent = True
                     self._unsettled_stop_futures.append(future)
                     result[name] = {
                         "requested": True,
