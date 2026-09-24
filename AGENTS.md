@@ -43,6 +43,24 @@ disagreements with documentation instead of assuming either is correct.
   and fixtures where possible. Avoid tests that merely restate implementation
   details. Never weaken failing tests to make a change pass.
 
+## Lynsense Isaac Sim constraints
+
+- The company-standard runtime is Isaac Sim `2023.1.*`. Do not silently target
+  Isaac Sim 4 or 5 or treat another local installation as compatible.
+- Real Isaac runs must pass an explicit `python.sh` executable and the version
+  contract in `robots/lynsense/isaac/`; offline/archive inspection alone is not
+  runtime acceptance.
+- Generated URDF, USD, logs, screenshots, and summaries belong under the
+  ignored `.artifacts/lynsense-isaac/` tree. Do not commit company assets or
+  probe evidence.
+- Isaac 3's `SimulationApp.close()` can terminate the Python process before
+  later statements run. Runtime evidence must be persisted before closing the
+  application, and a child exit code alone is not sufficient proof.
+- Desktop rendering requires a usable `DISPLAY` and `XAUTHORITY`. Keep real
+  runtime evidence separate from unit-test results, and do not claim the
+  Lynsense Isaac milestone until both the technical probe and recorded human
+  visual review pass `--verify-milestone`.
+
 ## Task skills
 
 Read the relevant skill when the task calls for it; ordinary edits do not
